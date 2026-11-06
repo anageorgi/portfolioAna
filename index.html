@@ -1,3 +1,5 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Ana Georgina Velasco</title>
 <meta name="description" content="Portfolio de Ana Georgina Velasco: comunicación cultural, festivales, medios, mediación y apps.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,6 +22,7 @@
   --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
   color-scheme:light;
 }
+[hidden]{display:none!important}
 html,body{height:100%}
 body{margin:0;overflow:hidden;background:linear-gradient(180deg,var(--sky-top),var(--sky-mid) 55%,var(--sky-low));color:var(--ink);font-family:var(--body);-webkit-font-smoothing:antialiased}
 #scene{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none}
@@ -102,7 +105,17 @@ body.panel-open .hint{opacity:0;pointer-events:none}
   background:linear-gradient(140deg,#ffd3ee,#d9d0ff 45%,#c9f6ff 75%,#eaffc9);border:1px solid #fff;display:flex;align-items:flex-end;padding:8px}
 .tile.video{grid-column:span 3;aspect-ratio:16/9;background:linear-gradient(140deg,#5c4fd1,#b07cff 50%,#ff8fcf)}
 .tile span{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;background:rgba(255,255,255,.85);border-radius:999px;padding:3px 8px}
-.tile.video::after{content:"";position:absolute;left:50%;top:50%;width:0;height:0;transform:translate(-35%,-50%);border-left:22px solid #fff;border-top:14px solid transparent;border-bottom:14px solid transparent;filter:drop-shadow(0 2px 6px rgba(0,0,0,.25))}
+.tile.img{padding:0;cursor:zoom-in}
+.tile.img img{width:100%;height:100%;object-fit:cover;display:block}
+.tile.yt{aspect-ratio:16/9;background-size:cover;background-position:center;text-decoration:none;color:var(--ink)}
+.links{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;padding:6px 11px;border-radius:999px;background:#fff;border:1px solid rgba(35,26,77,.15);color:var(--ink);text-decoration:none}
+.chip.ig{background:linear-gradient(135deg,#ffe0f1,#e6e1ff)}
+.chip:hover{background:var(--ink);color:#fff}
+.lb{position:fixed;inset:0;z-index:9;background:rgba(20,12,50,.85);display:flex;align-items:center;justify-content:center;padding:24px;cursor:zoom-out}
+.lb img{max-width:100%;max-height:100%;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.lb .xbtn{position:absolute;top:calc(16px + env(safe-area-inset-top,0px));right:max(16px,env(safe-area-inset-right,0px))}
+.tile.video::after,.tile.yt::after{content:"";position:absolute;left:50%;top:50%;width:0;height:0;transform:translate(-35%,-50%);border-left:22px solid #fff;border-top:14px solid transparent;border-bottom:14px solid transparent;filter:drop-shadow(0 2px 6px rgba(0,0,0,.25))}
 .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
 .tags span{font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;background:rgba(198,255,107,.55);border:1px solid rgba(35,26,77,.08)}
 .contact{margin:18px 0 8px;padding:16px;border-radius:16px;background:var(--ink);color:#fff}
@@ -163,13 +176,14 @@ body.panel-open .hint{opacity:0;pointer-events:none}
 </header>
 
 <p class="hint" id="hint"><i></i><span></span></p>
-<p class="proto" id="proto"></p>
 
 <section class="win" id="win" role="dialog" aria-labelledby="pTitle" aria-hidden="true">
   <div class="titlebar"><span class="orb"></span><span class="fname" id="fname"></span><button class="xbtn" id="closeBtn"></button></div>
   <div class="pbody" id="pbody"></div>
   <div class="pnav"><button id="prevBtn"></button><button id="nextBtn"></button></div>
 </section>
+
+<div class="lb" id="lb" hidden><img id="lbImg" alt=""><button class="xbtn" id="lbClose">×</button></div>
 
 <div class="list" id="list" hidden>
   <div class="list-inner">
@@ -187,14 +201,20 @@ body.panel-open .hint{opacity:0;pointer-events:none}
    .glb, put it in /models and set model: "models/name.glb".
    ========================================================= */
 const SECTIONS = [
-  { id:"sobre",         shape:"cup",        model:null, media:[[],["photo","photo","photo"],[],[],[]] },
-  { id:"eventos",       shape:"tote",       model:null, media:[["photo","photo","photo"],["video"],["photo","photo","photo"],["photo","photo","photo"],["photo","photo","photo"]] },
-  { id:"comunicacion",  shape:"notebook",   model:null, media:[["photo","photo","photo"],[],[],["photo","photo","photo"]] },
-  { id:"foto",          shape:"camera",     model:null, media:[["video"],["photo","photo","photo"],["photo","photo","photo","photo","photo","photo"]] },
-  { id:"medios",        shape:"headphones", model:null, media:[["video"],["photo","photo","photo"],["photo","photo","photo"]] },
-  { id:"apps",          shape:"gameboy",    model:null, media:[["photo","photo","photo"],["photo","photo","photo"],["photo","photo","photo"]] },
-  { id:"mediacion",     shape:"skull",      model:null, media:[["photo","photo","photo"],["photo","photo","photo"]] },
-  { id:"investigacion", shape:"book",       model:null, media:[[],[]] }
+  { id:"sobre",         shape:"cup",        model:null, media:[] },
+  { id:"eventos",       shape:"tote",       model:null, media:[[],[{img:"media/fbal26-equipo-mesa.jpg"},{img:"media/fbal26-equipo-noche.jpg"},{img:"media/fbal26-equipo-plaza.jpg"}]] },
+  { id:"comunicacion",  shape:"notebook",   model:null, media:[[{img:"media/fbal26-trabajando.jpg"},{ig:"https://www.instagram.com/p/DdMc-sgDMMO/"},{ig:"https://www.instagram.com/p/Dds-yqvDMy9/"},{ig:"https://www.instagram.com/p/Ddri5JNjM4t/"},{ig:"https://www.instagram.com/p/Dd9KW-Vsosk/"},{ig:"https://www.instagram.com/p/DddwCOujKMT/"},{ig:"https://www.instagram.com/p/Dc_ti5gDEsz/"}],[],[],[{ig:"https://www.instagram.com/oyetoulouse/",label:"@oyetoulouse"}]] },
+  { id:"foto",          shape:"camera",     model:null, media:[
+      [{yt:"JYd_zwpHFL4"},{yt:"7X9N8AIUxn0"},{yt:"nvaohG8Awow"},{ig:"https://www.instagram.com/p/DbbEYy7jRW4/",label:"Aftermovie Cannes"}],
+      [{img:"media/fiesta-analogica.jpg"},{ig:"https://www.instagram.com/p/DPJvtlSCr-d/"},{ig:"https://www.instagram.com/p/DPTvJ3NikUS/"},{ig:"https://www.instagram.com/p/DPHb_GiDEZY/"},{ig:"https://www.instagram.com/p/DPB_flsDEw5/"},{ig:"https://www.instagram.com/p/DOtQauEDGKg/"},{ig:"https://www.instagram.com/p/DOth2-ADGUW/"}],
+      [{ig:"https://www.instagram.com/p/DFTJj9pMIMw/"}],
+      [{ig:"https://www.instagram.com/p/ByCV1nsB0po/"}],
+      [{ig:"https://www.instagram.com/p/DQ9veYzjA-4/"},{ig:"https://www.instagram.com/p/DRR8BBADPBi/"},{ig:"https://www.instagram.com/p/DI2AF9qsPSP/"},{ig:"https://www.instagram.com/p/DN_MVscDAsy/"},{ig:"https://www.instagram.com/p/DY4SY0EDAvm/"}],
+      [{ig:"https://www.instagram.com/p/BTO_oLIBa1K/"},{ig:"https://www.instagram.com/p/Bj4Q69QgW8Q/"},{ig:"https://www.instagram.com/p/Bj9f3eWgjfL/"},{ig:"https://www.instagram.com/p/BnfAAOfAKfq/"},{ig:"https://www.instagram.com/p/BpSD3kYgdgE/"},{ig:"https://www.instagram.com/p/BmGOkBmAfsw/"},{ig:"https://www.instagram.com/p/BgmTYuFglsy/"},{ig:"https://www.instagram.com/p/BN5YPywg9_X/"},{ig:"https://www.instagram.com/p/BgrS8X-BKuR/"},{ig:"https://www.instagram.com/anageor/",label:"@anageor"}]] },
+  { id:"medios",        shape:"headphones", model:null, media:[[],[],[{link:"https://agendacultural-three.vercel.app/",label:"agendacultural-three.vercel.app"},{ig:"https://www.instagram.com/oyetoulouse/",label:"@oyetoulouse"}]] },
+  { id:"apps",          shape:"gameboy",    model:null, media:[[{link:"https://fbal-2026.vercel.app/",label:"fbal-2026.vercel.app"}],[{link:"https://agendacultural-three.vercel.app/",label:"agendacultural-three.vercel.app"}],[{link:"https://boda-rho-amber.vercel.app/",label:"boda-rho-amber.vercel.app"},{link:"https://boda-paty-arturo.vercel.app/",label:"boda-paty-arturo.vercel.app"}]] },
+  { id:"mediacion",     shape:"skull",      model:null, media:[[],[{img:"media/muertos-ofrenda.jpg"},{img:"media/muertos-atelier.jpg"}]] },
+  { id:"investigacion", shape:"book",       model:null, media:[] }
 ];
 const EMAIL = "anageor_95@hotmail.com";
 
@@ -226,18 +246,21 @@ es:{
   {t:"Centro de Estudios de JazzUV",m:"Xalapa · Asistente del área de Comunicación y RP · mar. 2019 – abr. 2020",d:"Comunicación interna y externa con artistas, patrocinadores y estudiantes.",b:["Iniciativas para difundir el jazz en la ciudad","Copywriting, publicidad y marketing digital","Gestión de redes sociales","Correspondencia de relaciones públicas"]},
   {t:"Community management",m:"SCORE · Sexprésate · JazzUV · No Wrong Numbers",d:"Gestión de redes sociales para distintos proyectos y organizaciones."},
   {t:"Oye Toulouse",m:"Cofundadora · @oyetoulouse",d:"Participación en la comunicación digital del medio cultural latino que cofundé en Toulouse."}]},
- foto:{k:"La cámara",t:"Foto & video",i:"Cobertura de festivales, videos cortos para redes y fotografía creativa.",items:[
+ foto:{k:"La cámara",t:"Foto & video",i:"Cobertura de festivales, producción de video y fotografía de autor.",items:[
   {t:"Festival de Cannes 2026",m:"Canal 22 · Canal Once (México) · Producción de video",d:"Producción y grabación de video para dos canales públicos mexicanos durante el festival.",b:["Grabación del presentador a cámara","Material del festival para las cápsulas","Producción de video en terreno"]},
-  {t:"Cobertura de festivales",m:"FBAL · Cinélatino · Oye Toulouse",d:"Fotos de ambiente, retratos de invitados y reels."},
-  {t:"Fotografía creativa",m:"Proyecto personal",d:"Una selección propia: luz, objetos, retratos y escenas cotidianas."}]},
- medios:{k:"Los audífonos",t:"Oye Toulouse",i:"Media cultural latina que cofundé en Toulouse: agenda, entrevistas y emisiones sobre la diáspora latinoamericana.",items:[
+  {t:"Cobertura de festivales",m:"FBAL · fiestas · reels",d:"Reels del Festival Biarritz Amérique Latine 2025, fotos de ambiente y de fiesta."},
+  {t:"Doble exposición",m:"Exposición fotográfica · Toulouse",d:"Una serie de fotografías superpuestas en doble exposición que cruza patrimonio y modernidad en el corazón de Toulouse. Las esculturas de los edificios antiguos dialogan con los escaparates contemporáneos y las siluetas de quienes pasan: lo intemporal de la piedra frente a lo efímero de la vida urbana. Una mirada fragmentada y poética sobre el pasado y el presente, la inmovilidad y el movimiento, y los trayectos humanos en la ciudad."},
+  {t:"La misma ventana",m:"Exposición fotográfica · Pontevedra, España",d:"Nadie se baña dos veces en el mismo río, decía Heráclito. Esta serie nace de una sola ventana, fotografiada día tras día: el encuadre no cambia, pero la luz y los colores nunca se repiten. Cada imagen recuerda que ningún día es igual al anterior."},
+  {t:"Collages",m:"Creación personal",d:"Una serie de collages personales."},
+  {t:"Fotografía artística",m:"@anageor",d:"Mi archivo de fotografía más libre: luz, objetos, ciudades y escenas cotidianas."}]},
+ medios:{k:"Los audífonos",t:"Oye Toulouse",i:"Media cultural latina que cofundé en Toulouse en septiembre de 2026: agenda, entrevistas y emisiones sobre la diáspora latinoamericana.",items:[
   {t:"Entrevistas",m:"Video",d:"Conversaciones con artistas, actores culturales, personas recién llegadas y gente militante."},
   {t:"Emisiones en vivo",m:"Podcast · plateaux extérieurs",d:"Una emisión al mes grabada en cafés, restaurantes y tiendas, con sus dueños e invitados."},
   {t:"Agenda cultural",m:"A mi cargo · mensual",d:"Estoy a cargo de la agenda: los eventos latinos del mes, alimentados por el equipo y por la comunidad."}]},
  apps:{k:"El Game Boy",t:"Apps",i:"Diseño y desarrollo apps web para proyectos culturales y personales, del concepto a la publicación.",items:[
   {t:"App FBAL 2026",m:"PWA bilingüe · Vercel",d:"La app del festival en francés y español: programación, invitados y un bloque « en vivo ahora »."},
   {t:"Agenda Oye Toulouse",m:"App web · Google Sheets",d:"Una agenda cultural que se actualiza sola desde la hoja de cálculo que llena el equipo."},
-  {t:"Apps de boda",m:"Proyectos personales",d:"Apps para las bodas de amigos: programa, información práctica y más. En capturas, para proteger sus datos."}]},
+  {t:"Apps de boda",m:"Proyectos personales",d:"Apps para las bodas de amigos: programa, información práctica y más."}]},
  mediacion:{k:"La calaverita",t:"Mediación cultural",i:"Talleres y encuentros que acercan el cine y las tradiciones latinoamericanas a públicos de todas las edades.",items:[
   {t:"Cinélatino escolar",m:"Público escolar · Toulouse",d:"Mediación con grupos de niñas y niños alrededor de las proyecciones del festival."},
   {t:"Ateliers Día de Muertos",m:"Asociación Arto · Ramonville · 2025 y 2026",d:"Tres talleres cada año para todo público, sobre todo niñas, niños y adolescentes.",b:["Explicar la tradición del Día de Muertos y sus símbolos","Cocinar picaditas decoradas con figuras de calaveritas"]}]},
@@ -263,18 +286,21 @@ en:{
   {t:"Centro de Estudios de JazzUV",m:"Xalapa · Communication & PR assistant · Mar 2019 – Apr 2020",d:"Internal and external communication with artists, sponsors and students.",b:["Initiatives to bring jazz to the city","Copywriting, advertising and digital marketing","Social media management","Public relations correspondence"]},
   {t:"Community management",m:"SCORE · Sexprésate · JazzUV · No Wrong Numbers",d:"Social media management for a range of projects and organisations."},
   {t:"Oye Toulouse",m:"Co-founder · @oyetoulouse",d:"Part of the digital communication of the Latin cultural outlet I co-founded in Toulouse."}]},
- foto:{k:"The camera",t:"Photo & video",i:"Festival coverage, short videos for social media and creative photography.",items:[
+ foto:{k:"The camera",t:"Photo & video",i:"Festival coverage, video production and personal photography.",items:[
   {t:"Cannes Film Festival 2026",m:"Canal 22 · Canal Once (Mexico) · Video production",d:"Video production and filming for two Mexican public TV channels during the festival.",b:["Filming the host's pieces to camera","Festival footage for the TV segments","On-site video production"]},
-  {t:"Festival coverage",m:"FBAL · Cinélatino · Oye Toulouse",d:"Atmosphere shots, guest portraits and reels."},
-  {t:"Creative photography",m:"Personal project",d:"My own selection: light, objects, portraits and everyday scenes."}]},
- medios:{k:"The headphones",t:"Oye Toulouse",i:"The Latin cultural outlet I co-founded in Toulouse: listings, interviews and shows about the Latin American diaspora.",items:[
+  {t:"Festival coverage",m:"FBAL · parties · reels",d:"Reels from the 2025 Festival Biarritz Amérique Latine, atmosphere and party photos."},
+  {t:"Double exposure",m:"Photo exhibition · Toulouse",d:"A series of superimposed, double-exposure photographs where heritage meets modernity in the heart of Toulouse. Sculptures on old buildings converse with contemporary shop windows and the silhouettes of passers-by: the timelessness of stone against the fleeting everyday life of the city. The compositions question the links between past and present, stillness and movement, offering a fragmented, poetic view of human paths through the city."},
+  {t:"The same window",m:"Photo exhibition · Pontevedra, Spain",d:"No one steps in the same river twice, said Heraclitus. This series starts from a single window, photographed day after day: the frame never changes, but the light and colours never repeat. Each image is a reminder that no day is like the one before."},
+  {t:"Collages",m:"Personal work",d:"A series of personal collages."},
+  {t:"Art photography",m:"@anageor",d:"My freest photography archive: light, objects, cities and everyday scenes."}]},
+ medios:{k:"The headphones",t:"Oye Toulouse",i:"The Latin cultural outlet I co-founded in Toulouse in September 2026: listings, interviews and shows about the Latin American diaspora.",items:[
   {t:"Interviews",m:"Video",d:"Conversations with artists, cultural workers, newcomers and activists."},
   {t:"Live shows",m:"Podcast · on location",d:"One show a month recorded in cafés, restaurants and shops, with their owners and guests."},
   {t:"Cultural listings",m:"My responsibility · monthly",d:"I run the listings: the month's Latin events, fed by the team and the community."}]},
  apps:{k:"The Game Boy",t:"Apps",i:"I design and build web apps for cultural and personal projects, from concept to launch.",items:[
   {t:"FBAL 2026 app",m:"Bilingual PWA · Vercel",d:"The festival app in French and Spanish: programme, guests and a live-now block."},
   {t:"Oye Toulouse listings",m:"Web app · Google Sheets",d:"A culture calendar that updates itself from the team's spreadsheet."},
-  {t:"Wedding apps",m:"Personal projects",d:"Apps for friends' weddings: schedule, practical info and more. Shown as screenshots to protect their data."}]},
+  {t:"Wedding apps",m:"Personal projects",d:"Apps for friends' weddings: schedule, practical info and more."}]},
  mediacion:{k:"The sugar skull",t:"Cultural outreach",i:"Workshops and encounters that bring Latin American cinema and traditions to audiences of all ages.",items:[
   {t:"Cinélatino for schools",m:"School audiences · Toulouse",d:"Outreach with groups of children around the festival screenings."},
   {t:"Day of the Dead workshops",m:"Arto association · Ramonville · 2025 and 2026",d:"Three workshops each year for all ages, mostly children and teenagers.",b:["Explaining the Día de Muertos tradition and its symbols","Cooking picaditas decorated with little skull figures"]}]},
@@ -300,18 +326,21 @@ fr:{
   {t:"Centro de Estudios de JazzUV",m:"Xalapa · Assistante pôle Communication et RP · mars 2019 – avril 2020",d:"Communication interne et externe auprès des artistes, sponsors et étudiant·es.",b:["Dispositifs pour faire vivre le jazz dans la ville","Copywriting, publicité et marketing digital","Gestion des réseaux sociaux","Gestion de la boîte mail relations publiques"]},
   {t:"Community management",m:"SCORE · Sexprésate · JazzUV · No Wrong Numbers",d:"Gestion des réseaux sociaux pour différents projets et structures."},
   {t:"Oye Toulouse",m:"Cofondatrice · @oyetoulouse",d:"Participation à la communication digitale du média culturel latino que j'ai cofondé à Toulouse."}]},
- foto:{k:"L'appareil photo",t:"Photo & vidéo",i:"Couverture de festivals, vidéos courtes pour les réseaux et photographie créative.",items:[
+ foto:{k:"L'appareil photo",t:"Photo & vidéo",i:"Couverture de festivals, production vidéo et photographie d'auteur.",items:[
   {t:"Festival de Cannes 2026",m:"Canal 22 · Canal Once (Mexique) · Production vidéo",d:"Production et tournage vidéo pour deux chaînes publiques mexicaines pendant le festival.",b:["Tournage du présentateur face caméra","Images du festival pour les capsules","Production vidéo sur le terrain"]},
-  {t:"Couverture de festivals",m:"FBAL · Cinélatino · Oye Toulouse",d:"Photos d'ambiance, portraits d'invités et reels."},
-  {t:"Photographie créative",m:"Projet personnel",d:"Ma sélection : lumière, objets, portraits et scènes du quotidien."}]},
- medios:{k:"Le casque",t:"Oye Toulouse",i:"Le média culturel latino que j'ai cofondé à Toulouse : agenda, interviews et émissions sur la diaspora latino-américaine.",items:[
+  {t:"Couverture de festivals",m:"FBAL · fêtes · reels",d:"Reels du Festival Biarritz Amérique Latine 2025, photos d'ambiance et de fête."},
+  {t:"Double exposition",m:"Exposition photo · Toulouse",d:"Cette série de photographies superposées en double exposition propose une rencontre entre le patrimoine et la modernité au cœur de Toulouse. Les sculptures des bâtiments anciens dialoguent avec les vitrines contemporaines et les silhouettes des passant·es, révélant un croisement entre l'intemporalité de la pierre et l'éphémère du quotidien urbain. Ces compositions questionnent les liens entre passé et présent, immobilité et mouvement, pour offrir une vision fragmentée et poétique des trajectoires humaines dans la ville."},
+  {t:"La même fenêtre",m:"Exposition photo · Pontevedra, Espagne",d:"On ne se baigne jamais deux fois dans le même fleuve, disait Héraclite. Cette série part d'une seule fenêtre, photographiée jour après jour : le cadre ne change pas, mais la lumière et les couleurs ne se répètent jamais. Chaque image rappelle qu'aucun jour ne ressemble au précédent."},
+  {t:"Collages",m:"Création personnelle",d:"Une série de collages personnels."},
+  {t:"Photographie artistique",m:"@anageor",d:"Mes photos les plus libres : lumière, objets, villes et scènes du quotidien."}]},
+ medios:{k:"Le casque",t:"Oye Toulouse",i:"Le média culturel latino que j'ai cofondé à Toulouse en septembre 2026 : agenda, interviews et émissions sur la diaspora latino-américaine.",items:[
   {t:"Interviews",m:"Vidéo",d:"Conversations avec des artistes, des acteurs culturels, des personnes nouvellement arrivées et des militant·es."},
   {t:"Émissions en direct",m:"Podcast · plateaux extérieurs",d:"Une émission par mois enregistrée dans des cafés, restaurants et boutiques, avec leurs gérant·es et des invité·es."},
   {t:"Agenda culturel",m:"Sous ma responsabilité · mensuel",d:"Je gère l'agenda : les événements latinos du mois, alimentés par l'équipe et la communauté."}]},
  apps:{k:"La Game Boy",t:"Applis",i:"Je conçois et développe des applis web pour des projets culturels et personnels, de l'idée à la mise en ligne.",items:[
   {t:"Appli FBAL 2026",m:"PWA bilingue · Vercel",d:"L'appli du festival en français et en espagnol : programmation, invités et un bloc « en direct »."},
   {t:"Agenda Oye Toulouse",m:"Appli web · Google Sheets",d:"Un agenda culturel qui se met à jour tout seul depuis le tableur rempli par l'équipe."},
-  {t:"Applis de mariage",m:"Projets personnels",d:"Des applis pour les mariages d'ami·es : programme, infos pratiques et plus. En captures, pour protéger leurs données."}]},
+  {t:"Applis de mariage",m:"Projets personnels",d:"Des applis pour les mariages d'ami·es : programme, infos pratiques et plus."}]},
  mediacion:{k:"La calavera",t:"Médiation culturelle",i:"Ateliers et rencontres qui rapprochent le cinéma et les traditions latino-américaines de tous les publics.",items:[
   {t:"Cinélatino scolaire",m:"Public scolaire · Toulouse",d:"Médiation avec des groupes d'enfants autour des projections du festival."},
   {t:"Ateliers Día de Muertos",m:"Association Arto · Ramonville · 2025 et 2026",d:"Trois ateliers par an, tout public, surtout des enfants et des adolescent·es.",b:["Expliquer la tradition du Día de Muertos et ses symboles","Cuisiner des picaditas décorées de petites têtes de mort"]}]},
@@ -331,7 +360,7 @@ const esc = s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;
 
 function renderUI(){
   const u=UI[lang]; document.documentElement.lang=lang;
-  $("#tagline").textContent=u.tag; $("#meHi").textContent=u.hi; $("#meBtn").setAttribute("aria-label",C[lang].sobre.t); $("#hint span").textContent=u.hint; $("#proto").textContent=u.proto;
+  $("#tagline").textContent=u.tag; $("#meHi").textContent=u.hi; $("#meBtn").setAttribute("aria-label",C[lang].sobre.t); $("#hint span").textContent=u.hint;
   $("#listBtn").textContent=u.list; $("#fieldBtn").textContent=u.field; $("#listTitle").textContent=u.listTitle; $("#closeBtn").textContent=u.close+" ×";
   document.querySelectorAll("#langs button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.lang===lang));
   labels.forEach((el,i)=>{ el.textContent=C[lang][SECTIONS[i].id].t; });
@@ -346,7 +375,13 @@ function renderPanel(i){
     const media=(s.media[j]||[]);
     h+=`<article class="item"><h3>${esc(it.t)}</h3>${it.m?`<p class="meta">${esc(it.m)}</p>`:""}<p class="d">${esc(it.d)}</p>`;
     if(it.b) h+=`<ul>${it.b.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`;
-    if(media.length) h+=`<div class="media">${media.map(m=>`<div class="tile ${m}"><span>${m==="video"?u.video:u.photo}</span></div>`).join("")}</div>`;
+    const tiles=media.filter(m=>m.img||m.yt), chips=media.filter(m=>m.ig||m.link);
+    if(tiles.length) h+=`<div class="media">${tiles.map(m=>m.img
+      ?`<button class="tile img" data-full="${m.img}"><img src="${m.img}" alt="${esc(it.t)}" loading="lazy"></button>`
+      :`<a class="tile yt" href="https://youtu.be/${m.yt}" target="_blank" rel="noopener" style="background-image:url(https://i.ytimg.com/vi/${m.yt}/hqdefault.jpg),linear-gradient(140deg,#5c4fd1,#b07cff 50%,#ff8fcf)"><span>YouTube ↗</span></a>`).join("")}</div>`;
+    if(chips.length){ let n=0; const many=chips.filter(c=>c.ig&&!c.label).length>1;
+      h+=`<div class="links">${chips.map(c=>{const lab=c.label||("Instagram"+(many?" "+(++n):""));
+        return `<a class="chip${c.ig?" ig":""}" href="${c.ig||c.link}" target="_blank" rel="noopener">${esc(lab)} ↗</a>`;}).join("")}</div>`; }
     if(it.tags) h+=`<div class="tags">${it.tags.map(x=>`<span>${esc(x)}</span>`).join("")}</div>`;
     h+=`</article>`;
   });
@@ -376,12 +411,14 @@ const labels=SECTIONS.map((s,i)=>{const b=document.createElement("button");b.cla
 document.querySelectorAll("#langs button").forEach(b=>b.addEventListener("click",()=>{lang=b.dataset.lang;try{localStorage.setItem("ana-lang",lang)}catch(e){}renderUI();}));
 $("#closeBtn").addEventListener("click",closePanel);
 $("#meBtn").addEventListener("click",()=>openSection(0));
+$("#pbody").addEventListener("click",e=>{const t=e.target.closest(".tile.img");if(!t)return;const im=$("#lbImg");im.src=t.dataset.full;im.alt=t.querySelector("img").alt;$("#lb").hidden=false;});
+$("#lb").addEventListener("click",()=>{$("#lb").hidden=true;});
 $("#prevBtn").addEventListener("click",()=>openSection((current+SECTIONS.length-1)%SECTIONS.length));
 $("#nextBtn").addEventListener("click",()=>openSection((current+1)%SECTIONS.length));
 $("#listBtn").addEventListener("click",()=>{$("#list").hidden=false;});
 $("#fieldBtn").addEventListener("click",()=>{$("#list").hidden=true;});
 $("#grid").addEventListener("click",e=>{const c=e.target.closest(".card");if(!c)return;$("#list").hidden=true;openSection(+c.dataset.i);});
-addEventListener("keydown",e=>{ if(e.key==="Escape"){ if(!$("#list").hidden) $("#list").hidden=true; else closePanel(); }});
+addEventListener("keydown",e=>{ if(e.key==="Escape"){ if(!$("#lb").hidden) $("#lb").hidden=true; else if(!$("#list").hidden) $("#list").hidden=true; else closePanel(); }});
 addEventListener("hashchange",fromHash);
 
 /* =========================================================
@@ -395,7 +432,7 @@ try{
 }catch(e){ renderer=null; }
 
 if(!renderer || !window.THREE){
-  renderUI(); $("#list").hidden=false; $("#fieldBtn").parentElement.hidden=true; fromHash();
+  labelBox.hidden=true; renderUI(); $("#list").hidden=false; $("#fieldBtn").parentElement.hidden=true; fromHash();
 } else {
 THREE.ColorManagement.legacyMode=false;
 renderer.setPixelRatio(Math.min(devicePixelRatio,2));
