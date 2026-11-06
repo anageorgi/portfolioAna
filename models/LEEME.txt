@@ -1,0 +1,3 @@
+Pon aquí tus escaneos de Polycam exportados en .glb (ej. taza.glb).
+Luego, en index.html, busca SECTIONS y cambia model:null por model:"models/taza.glb".
+El objeto se ajusta solo de tamaño y posición.
