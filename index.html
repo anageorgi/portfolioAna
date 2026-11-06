@@ -107,13 +107,21 @@ body.panel-open .hint{opacity:0;pointer-events:none}
 .tile span{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;background:rgba(255,255,255,.85);border-radius:999px;padding:3px 8px}
 .tile.img{padding:0;cursor:zoom-in}
 .tile.img img{width:100%;height:100%;object-fit:cover;display:block}
-.tile.yt{aspect-ratio:16/9;background-size:cover;background-position:center;text-decoration:none;color:var(--ink)}
+.tile.yt{aspect-ratio:16/9;cursor:pointer;background-size:cover;background-position:center;text-decoration:none;color:var(--ink)}
 .links{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
 .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;padding:6px 11px;border-radius:999px;background:#fff;border:1px solid rgba(35,26,77,.15);color:var(--ink);text-decoration:none}
 .chip.ig{background:linear-gradient(135deg,#ffe0f1,#e6e1ff)}
 .chip:hover{background:var(--ink);color:#fff}
 .lb{position:fixed;inset:0;z-index:9;background:rgba(20,12,50,.85);display:flex;align-items:center;justify-content:center;padding:24px;cursor:zoom-out}
+.lb{flex-direction:column;gap:14px}
+.lb-stage{display:flex;align-items:center;justify-content:center;max-width:100%;max-height:calc(100% - 50px);min-height:0}
 .lb img{max-width:100%;max-height:100%;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.lb iframe{border:0;border-radius:12px;background:#fff;box-shadow:0 20px 60px rgba(0,0,0,.4);max-width:100%}
+.lb iframe.yt{width:min(960px,92vw);aspect-ratio:16/9;background:#000}
+.lb iframe.ig{width:min(420px,92vw);height:min(760px,78vh)}
+.lb-out{font-family:var(--mono);font-size:12px;color:#fff;text-decoration:none;padding:7px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.5)}
+.lb-out:hover{background:#fff;color:var(--ink)}
+button.chip{cursor:pointer;font-family:var(--mono)}
 .lb .xbtn{position:absolute;top:calc(16px + env(safe-area-inset-top,0px));right:max(16px,env(safe-area-inset-right,0px))}
 .tile.video::after,.tile.yt::after{content:"";position:absolute;left:50%;top:50%;width:0;height:0;transform:translate(-35%,-50%);border-left:22px solid #fff;border-top:14px solid transparent;border-bottom:14px solid transparent;filter:drop-shadow(0 2px 6px rgba(0,0,0,.25))}
 .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
@@ -183,7 +191,7 @@ body.panel-open .hint{opacity:0;pointer-events:none}
   <div class="pnav"><button id="prevBtn"></button><button id="nextBtn"></button></div>
 </section>
 
-<div class="lb" id="lb" hidden><img id="lbImg" alt=""><button class="xbtn" id="lbClose">×</button></div>
+<div class="lb" id="lb" hidden><div class="lb-stage" id="lbStage"></div><a class="lb-out" id="lbOut" target="_blank" rel="noopener" hidden></a><button class="xbtn" id="lbClose">×</button></div>
 
 <div class="list" id="list" hidden>
   <div class="list-inner">
@@ -206,14 +214,14 @@ const SECTIONS = [
   { id:"comunicacion",  shape:"notebook",   model:null, media:[[{img:"media/fbal26-trabajando.jpg"},{ig:"https://www.instagram.com/p/DdMc-sgDMMO/"},{ig:"https://www.instagram.com/p/Dds-yqvDMy9/"},{ig:"https://www.instagram.com/p/Ddri5JNjM4t/"},{ig:"https://www.instagram.com/p/Dd9KW-Vsosk/"},{ig:"https://www.instagram.com/p/DddwCOujKMT/"},{ig:"https://www.instagram.com/p/Dc_ti5gDEsz/"}],[],[],[{ig:"https://www.instagram.com/oyetoulouse/",label:"@oyetoulouse"}]] },
   { id:"foto",          shape:"camera",     model:null, media:[
       [{yt:"JYd_zwpHFL4"},{yt:"7X9N8AIUxn0"},{yt:"nvaohG8Awow"},{ig:"https://www.instagram.com/p/DbbEYy7jRW4/",label:"Aftermovie Cannes"}],
-      [{img:"media/fiesta-analogica.jpg"},{ig:"https://www.instagram.com/p/DPJvtlSCr-d/"},{ig:"https://www.instagram.com/p/DPTvJ3NikUS/"},{ig:"https://www.instagram.com/p/DPHb_GiDEZY/"},{ig:"https://www.instagram.com/p/DPB_flsDEw5/"},{ig:"https://www.instagram.com/p/DOtQauEDGKg/"},{ig:"https://www.instagram.com/p/DOth2-ADGUW/"}],
+      [{ig:"https://www.instagram.com/p/DPJvtlSCr-d/"},{ig:"https://www.instagram.com/p/DPTvJ3NikUS/"},{ig:"https://www.instagram.com/p/DPHb_GiDEZY/"},{ig:"https://www.instagram.com/p/DPB_flsDEw5/"},{ig:"https://www.instagram.com/p/DOtQauEDGKg/"},{ig:"https://www.instagram.com/p/DOth2-ADGUW/"}],
       [{ig:"https://www.instagram.com/p/DFTJj9pMIMw/"}],
       [{ig:"https://www.instagram.com/p/ByCV1nsB0po/"}],
       [{ig:"https://www.instagram.com/p/DQ9veYzjA-4/"},{ig:"https://www.instagram.com/p/DRR8BBADPBi/"},{ig:"https://www.instagram.com/p/DI2AF9qsPSP/"},{ig:"https://www.instagram.com/p/DN_MVscDAsy/"},{ig:"https://www.instagram.com/p/DY4SY0EDAvm/"}],
       [{ig:"https://www.instagram.com/p/BTO_oLIBa1K/"},{ig:"https://www.instagram.com/p/Bj4Q69QgW8Q/"},{ig:"https://www.instagram.com/p/Bj9f3eWgjfL/"},{ig:"https://www.instagram.com/p/BnfAAOfAKfq/"},{ig:"https://www.instagram.com/p/BpSD3kYgdgE/"},{ig:"https://www.instagram.com/p/BmGOkBmAfsw/"},{ig:"https://www.instagram.com/p/BgmTYuFglsy/"},{ig:"https://www.instagram.com/p/BN5YPywg9_X/"},{ig:"https://www.instagram.com/p/BgrS8X-BKuR/"},{ig:"https://www.instagram.com/anageor/",label:"@anageor"}]] },
   { id:"medios",        shape:"headphones", model:null, media:[[],[],[{link:"https://agendacultural-three.vercel.app/",label:"agendacultural-three.vercel.app"},{ig:"https://www.instagram.com/oyetoulouse/",label:"@oyetoulouse"}]] },
   { id:"apps",          shape:"gameboy",    model:null, media:[[{link:"https://fbal-2026.vercel.app/",label:"fbal-2026.vercel.app"}],[{link:"https://agendacultural-three.vercel.app/",label:"agendacultural-three.vercel.app"}],[{link:"https://boda-rho-amber.vercel.app/",label:"boda-rho-amber.vercel.app"},{link:"https://boda-paty-arturo.vercel.app/",label:"boda-paty-arturo.vercel.app"}]] },
-  { id:"mediacion",     shape:"skull",      model:null, media:[[],[{img:"media/muertos-ofrenda.jpg"},{img:"media/muertos-atelier.jpg"}]] },
+  { id:"mediacion",     shape:"skull",      model:null, media:[[],[{img:"media/muertos-cocina.jpg"},{img:"media/muertos-sarten.jpg"},{img:"media/muertos-mesa.jpg"},{img:"media/muertos-plato.jpg"},{img:"media/muertos-mascara.jpg"},{img:"media/muertos-ofrenda.jpg"}]] },
   { id:"investigacion", shape:"book",       model:null, media:[] }
 ];
 const EMAIL = "anageor_95@hotmail.com";
@@ -222,9 +230,9 @@ const EMAIL = "anageor_95@hotmail.com";
    2) TEXTS in 3 languages (example copy, replace freely)
    ========================================================= */
 const UI = {
-  es:{tag:"Comunicación y eventos culturales: cine, música, medios y mediación. Entre México y Toulouse.",hint:"Haz clic en un objeto para explorar",list:"Ver en lista",field:"Volver al campo",close:"Cerrar",prev:"← ",next:" →",listTitle:"Todo el portfolio",proto:"Prototipo · objetos y textos de ejemplo",photo:"foto",video:"video",contact:"Escríbeme",hi:"¡hola!"},
-  en:{tag:"Communication and cultural events: film, music, media and outreach. Between Mexico and Toulouse.",hint:"Click an object to explore",list:"List view",field:"Back to the field",close:"Close",prev:"← ",next:" →",listTitle:"The whole portfolio",proto:"Prototype · placeholder objects and text",photo:"photo",video:"video",contact:"Get in touch",hi:"hi!"},
-  fr:{tag:"Communication et événements culturels : cinéma, musique, médias et médiation. Entre le Mexique et Toulouse.",hint:"Cliquez sur un objet pour explorer",list:"Vue liste",field:"Retour au champ",close:"Fermer",prev:"← ",next:" →",listTitle:"Tout le portfolio",proto:"Prototype · objets et textes d'exemple",photo:"photo",video:"vidéo",contact:"M'écrire",hi:"coucou !"}
+  es:{tag:"Comunicación y eventos culturales: cine, música, medios y mediación. Entre México y Toulouse.",hint:"Haz clic en un objeto para explorar",list:"Ver en lista",field:"Volver al campo",close:"Cerrar",prev:"← ",next:" →",listTitle:"Todo el portfolio",proto:"Prototipo · objetos y textos de ejemplo",photo:"foto",video:"video",contact:"Escríbeme",hi:"¡hola!",play:"Ver",openOn:"Abrir en"},
+  en:{tag:"Communication and cultural events: film, music, media and outreach. Between Mexico and Toulouse.",hint:"Click an object to explore",list:"List view",field:"Back to the field",close:"Close",prev:"← ",next:" →",listTitle:"The whole portfolio",proto:"Prototype · placeholder objects and text",photo:"photo",video:"video",contact:"Get in touch",hi:"hi!",play:"Watch",openOn:"Open on"},
+  fr:{tag:"Communication et événements culturels : cinéma, musique, médias et médiation. Entre le Mexique et Toulouse.",hint:"Cliquez sur un objet pour explorer",list:"Vue liste",field:"Retour au champ",close:"Fermer",prev:"← ",next:" →",listTitle:"Tout le portfolio",proto:"Prototype · objets et textes d'exemple",photo:"photo",video:"vidéo",contact:"M'écrire",hi:"coucou !",play:"Voir",openOn:"Ouvrir sur"}
 };
 
 const C = {
@@ -248,7 +256,7 @@ es:{
   {t:"Oye Toulouse",m:"Cofundadora · @oyetoulouse",d:"Participación en la comunicación digital del medio cultural latino que cofundé en Toulouse."}]},
  foto:{k:"La cámara",t:"Foto & video",i:"Cobertura de festivales, producción de video y fotografía de autor.",items:[
   {t:"Festival de Cannes 2026",m:"Canal 22 · Canal Once (México) · Producción de video",d:"Producción y grabación de video para dos canales públicos mexicanos durante el festival.",b:["Grabación del presentador a cámara","Material del festival para las cápsulas","Producción de video en terreno"]},
-  {t:"Cobertura de festivales",m:"FBAL · fiestas · reels",d:"Reels del Festival Biarritz Amérique Latine 2025, fotos de ambiente y de fiesta."},
+  {t:"Reels FBAL 2025",m:"Festival Biarritz Amérique Latine · Instagram",d:"Videos cortos para las redes del festival en 2025."},
   {t:"Doble exposición",m:"Exposición fotográfica · Toulouse",d:"Una serie de fotografías superpuestas en doble exposición que cruza patrimonio y modernidad en el corazón de Toulouse. Las esculturas de los edificios antiguos dialogan con los escaparates contemporáneos y las siluetas de quienes pasan: lo intemporal de la piedra frente a lo efímero de la vida urbana. Una mirada fragmentada y poética sobre el pasado y el presente, la inmovilidad y el movimiento, y los trayectos humanos en la ciudad."},
   {t:"La misma ventana",m:"Exposición fotográfica · Pontevedra, España",d:"Nadie se baña dos veces en el mismo río, decía Heráclito. Esta serie nace de una sola ventana, fotografiada día tras día: el encuadre no cambia, pero la luz y los colores nunca se repiten. Cada imagen recuerda que ningún día es igual al anterior."},
   {t:"Collages",m:"Creación personal",d:"Una serie de collages personales."},
@@ -288,7 +296,7 @@ en:{
   {t:"Oye Toulouse",m:"Co-founder · @oyetoulouse",d:"Part of the digital communication of the Latin cultural outlet I co-founded in Toulouse."}]},
  foto:{k:"The camera",t:"Photo & video",i:"Festival coverage, video production and personal photography.",items:[
   {t:"Cannes Film Festival 2026",m:"Canal 22 · Canal Once (Mexico) · Video production",d:"Video production and filming for two Mexican public TV channels during the festival.",b:["Filming the host's pieces to camera","Festival footage for the TV segments","On-site video production"]},
-  {t:"Festival coverage",m:"FBAL · parties · reels",d:"Reels from the 2025 Festival Biarritz Amérique Latine, atmosphere and party photos."},
+  {t:"FBAL 2025 reels",m:"Festival Biarritz Amérique Latine · Instagram",d:"Short videos for the festival's social media in 2025."},
   {t:"Double exposure",m:"Photo exhibition · Toulouse",d:"A series of superimposed, double-exposure photographs where heritage meets modernity in the heart of Toulouse. Sculptures on old buildings converse with contemporary shop windows and the silhouettes of passers-by: the timelessness of stone against the fleeting everyday life of the city. The compositions question the links between past and present, stillness and movement, offering a fragmented, poetic view of human paths through the city."},
   {t:"The same window",m:"Photo exhibition · Pontevedra, Spain",d:"No one steps in the same river twice, said Heraclitus. This series starts from a single window, photographed day after day: the frame never changes, but the light and colours never repeat. Each image is a reminder that no day is like the one before."},
   {t:"Collages",m:"Personal work",d:"A series of personal collages."},
@@ -328,7 +336,7 @@ fr:{
   {t:"Oye Toulouse",m:"Cofondatrice · @oyetoulouse",d:"Participation à la communication digitale du média culturel latino que j'ai cofondé à Toulouse."}]},
  foto:{k:"L'appareil photo",t:"Photo & vidéo",i:"Couverture de festivals, production vidéo et photographie d'auteur.",items:[
   {t:"Festival de Cannes 2026",m:"Canal 22 · Canal Once (Mexique) · Production vidéo",d:"Production et tournage vidéo pour deux chaînes publiques mexicaines pendant le festival.",b:["Tournage du présentateur face caméra","Images du festival pour les capsules","Production vidéo sur le terrain"]},
-  {t:"Couverture de festivals",m:"FBAL · fêtes · reels",d:"Reels du Festival Biarritz Amérique Latine 2025, photos d'ambiance et de fête."},
+  {t:"Reels FBAL 2025",m:"Festival Biarritz Amérique Latine · Instagram",d:"Vidéos courtes pour les réseaux du festival en 2025."},
   {t:"Double exposition",m:"Exposition photo · Toulouse",d:"Cette série de photographies superposées en double exposition propose une rencontre entre le patrimoine et la modernité au cœur de Toulouse. Les sculptures des bâtiments anciens dialoguent avec les vitrines contemporaines et les silhouettes des passant·es, révélant un croisement entre l'intemporalité de la pierre et l'éphémère du quotidien urbain. Ces compositions questionnent les liens entre passé et présent, immobilité et mouvement, pour offrir une vision fragmentée et poétique des trajectoires humaines dans la ville."},
   {t:"La même fenêtre",m:"Exposition photo · Pontevedra, Espagne",d:"On ne se baigne jamais deux fois dans le même fleuve, disait Héraclite. Cette série part d'une seule fenêtre, photographiée jour après jour : le cadre ne change pas, mais la lumière et les couleurs ne se répètent jamais. Chaque image rappelle qu'aucun jour ne ressemble au précédent."},
   {t:"Collages",m:"Création personnelle",d:"Une série de collages personnels."},
@@ -378,10 +386,11 @@ function renderPanel(i){
     const tiles=media.filter(m=>m.img||m.yt), chips=media.filter(m=>m.ig||m.link);
     if(tiles.length) h+=`<div class="media">${tiles.map(m=>m.img
       ?`<button class="tile img" data-full="${m.img}"><img src="${m.img}" alt="${esc(it.t)}" loading="lazy"></button>`
-      :`<a class="tile yt" href="https://youtu.be/${m.yt}" target="_blank" rel="noopener" style="background-image:url(https://i.ytimg.com/vi/${m.yt}/hqdefault.jpg),linear-gradient(140deg,#5c4fd1,#b07cff 50%,#ff8fcf)"><span>YouTube ↗</span></a>`).join("")}</div>`;
+      :`<button class="tile yt" data-yt="${m.yt}" style="background-image:url(https://i.ytimg.com/vi/${m.yt}/hqdefault.jpg),linear-gradient(140deg,#5c4fd1,#b07cff 50%,#ff8fcf)"><span>▶ ${u.play}</span></button>`).join("")}</div>`;
     if(chips.length){ let n=0; const many=chips.filter(c=>c.ig&&!c.label).length>1;
       h+=`<div class="links">${chips.map(c=>{const lab=c.label||("Instagram"+(many?" "+(++n):""));
-        return `<a class="chip${c.ig?" ig":""}" href="${c.ig||c.link}" target="_blank" rel="noopener">${esc(lab)} ↗</a>`;}).join("")}</div>`; }
+        const post=c.ig&&/instagram\.com\/(p|reel)\//.test(c.ig);
+        return post?`<button class="chip ig" data-ig="${c.ig}">▶ ${esc(lab)}</button>`:`<a class="chip${c.ig?" ig":""}" href="${c.ig||c.link}" target="_blank" rel="noopener">${esc(lab)} ↗</a>`;}).join("")}</div>`; }
     if(it.tags) h+=`<div class="tags">${it.tags.map(x=>`<span>${esc(x)}</span>`).join("")}</div>`;
     h+=`</article>`;
   });
@@ -411,14 +420,21 @@ const labels=SECTIONS.map((s,i)=>{const b=document.createElement("button");b.cla
 document.querySelectorAll("#langs button").forEach(b=>b.addEventListener("click",()=>{lang=b.dataset.lang;try{localStorage.setItem("ana-lang",lang)}catch(e){}renderUI();}));
 $("#closeBtn").addEventListener("click",closePanel);
 $("#meBtn").addEventListener("click",()=>openSection(0));
-$("#pbody").addEventListener("click",e=>{const t=e.target.closest(".tile.img");if(!t)return;const im=$("#lbImg");im.src=t.dataset.full;im.alt=t.querySelector("img").alt;$("#lb").hidden=false;});
-$("#lb").addEventListener("click",()=>{$("#lb").hidden=true;});
+function openLB(html,out,outLabel){ $("#lbStage").innerHTML=html; const o=$("#lbOut"); if(out){o.href=out;o.textContent=outLabel+" ↗";o.hidden=false;} else o.hidden=true; $("#lb").hidden=false; }
+function closeLB(){ $("#lb").hidden=true; $("#lbStage").innerHTML=""; }
+$("#pbody").addEventListener("click",e=>{
+  const im=e.target.closest(".tile.img"), yt=e.target.closest("[data-yt]"), ig=e.target.closest("[data-ig]"), u=UI[lang];
+  if(im) openLB(`<img src="${im.dataset.full}" alt="${esc(im.querySelector("img").alt)}">`);
+  else if(yt) openLB(`<iframe class="yt" src="https://www.youtube-nocookie.com/embed/${yt.dataset.yt}?autoplay=1&rel=0" title="YouTube" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`,"https://youtu.be/"+yt.dataset.yt,u.openOn+" YouTube");
+  else if(ig){ const url=ig.dataset.ig.split("?")[0].replace(/\/?$/,"/"); openLB(`<iframe class="ig" src="${url}embed/" title="Instagram" allow="autoplay; encrypted-media" scrolling="no"></iframe>`,url,u.openOn+" Instagram"); }
+});
+$("#lb").addEventListener("click",e=>{ if(e.target.closest("iframe,.lb-out")) return; closeLB(); });
 $("#prevBtn").addEventListener("click",()=>openSection((current+SECTIONS.length-1)%SECTIONS.length));
 $("#nextBtn").addEventListener("click",()=>openSection((current+1)%SECTIONS.length));
 $("#listBtn").addEventListener("click",()=>{$("#list").hidden=false;});
 $("#fieldBtn").addEventListener("click",()=>{$("#list").hidden=true;});
 $("#grid").addEventListener("click",e=>{const c=e.target.closest(".card");if(!c)return;$("#list").hidden=true;openSection(+c.dataset.i);});
-addEventListener("keydown",e=>{ if(e.key==="Escape"){ if(!$("#lb").hidden) $("#lb").hidden=true; else if(!$("#list").hidden) $("#list").hidden=true; else closePanel(); }});
+addEventListener("keydown",e=>{ if(e.key==="Escape"){ if(!$("#lb").hidden) closeLB(); else if(!$("#list").hidden) $("#list").hidden=true; else closePanel(); }});
 addEventListener("hashchange",fromHash);
 
 /* =========================================================
