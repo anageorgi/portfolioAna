@@ -37,6 +37,15 @@ button{font:inherit;color:inherit;cursor:pointer}
   -webkit-background-clip:text;background-clip:text;color:transparent;
   filter:drop-shadow(0 2px 0 rgba(58,38,140,.38)) drop-shadow(0 8px 18px rgba(255,95,180,.25))}
 .tagline{margin:8px 0 0;font-size:14px;font-weight:500;color:var(--ink);max-width:32ch;text-wrap:balance}
+.sticker{position:relative;display:block;margin-top:14px;width:clamp(70px,8.5vw,108px);padding:6px 6px 22px;background:#fff;border:0;border-radius:10px;
+  transform:rotate(-6deg);box-shadow:0 12px 28px rgba(45,25,120,.35);animation:floaty 5s ease-in-out infinite}
+.sticker img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:6px}
+.sticker span{position:absolute;left:0;right:0;bottom:4px;text-align:center;font-family:var(--display);font-size:10px;font-weight:700;color:var(--bubble)}
+.sticker::before{content:"";position:absolute;top:-9px;right:-9px;width:22px;height:22px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#fff 0 18%,var(--lime) 55%,#6fae1e)}
+.sticker:hover{animation-play-state:paused;box-shadow:0 16px 36px rgba(255,95,180,.45)}
+@keyframes floaty{50%{transform:rotate(-2deg) translateY(-7px)}}
+.me{display:block;width:128px;max-width:100%;border:6px solid #fff;border-bottom-width:22px;border-radius:10px;transform:rotate(3deg);box-shadow:0 10px 24px rgba(45,25,120,.25);margin:2px 0 18px}
 .controls{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
 .pill{display:inline-flex;align-items:center;gap:2px;padding:4px;border-radius:999px;background:var(--glass);border:1px solid var(--glass-line);
   box-shadow:0 6px 24px rgba(60,40,150,.18);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
@@ -130,6 +139,7 @@ body.panel-open .hint{opacity:0;pointer-events:none}
   .pbody{padding:20px 18px 8px}
 }
 @media (prefers-reduced-motion:reduce){
+  .sticker{animation:none}
   .win,.tag,.card{transition:none}
   .hint i{animation:none}
 }
@@ -142,6 +152,7 @@ body.panel-open .hint{opacity:0;pointer-events:none}
   <div class="brand">
     <h1 class="wordmark">ana georgina<br>velasco</h1>
     <p class="tagline" id="tagline"></p>
+    <button class="sticker" id="meBtn"><img src="media/ana.jpg" alt="Ana Georgina Velasco"><span id="meHi"></span></button>
   </div>
   <div class="controls">
     <div class="pill" role="group" aria-label="Idioma / Language / Langue" id="langs">
@@ -191,9 +202,9 @@ const EMAIL = "anageor_95@hotmail.com";
    2) TEXTS in 3 languages (example copy, replace freely)
    ========================================================= */
 const UI = {
-  es:{tag:"Comunicación y eventos culturales: cine, música, medios y mediación. Entre México y Toulouse.",hint:"Haz clic en un objeto para explorar",list:"Ver en lista",field:"Volver al campo",close:"Cerrar",prev:"← ",next:" →",listTitle:"Todo el portfolio",proto:"Prototipo · objetos y textos de ejemplo",photo:"foto",video:"video",contact:"Escríbeme"},
-  en:{tag:"Communication and cultural events: film, music, media and outreach. Between Mexico and Toulouse.",hint:"Click an object to explore",list:"List view",field:"Back to the field",close:"Close",prev:"← ",next:" →",listTitle:"The whole portfolio",proto:"Prototype · placeholder objects and text",photo:"photo",video:"video",contact:"Get in touch"},
-  fr:{tag:"Communication et événements culturels : cinéma, musique, médias et médiation. Entre le Mexique et Toulouse.",hint:"Cliquez sur un objet pour explorer",list:"Vue liste",field:"Retour au champ",close:"Fermer",prev:"← ",next:" →",listTitle:"Tout le portfolio",proto:"Prototype · objets et textes d'exemple",photo:"photo",video:"vidéo",contact:"M'écrire"}
+  es:{tag:"Comunicación y eventos culturales: cine, música, medios y mediación. Entre México y Toulouse.",hint:"Haz clic en un objeto para explorar",list:"Ver en lista",field:"Volver al campo",close:"Cerrar",prev:"← ",next:" →",listTitle:"Todo el portfolio",proto:"Prototipo · objetos y textos de ejemplo",photo:"foto",video:"video",contact:"Escríbeme",hi:"¡hola!"},
+  en:{tag:"Communication and cultural events: film, music, media and outreach. Between Mexico and Toulouse.",hint:"Click an object to explore",list:"List view",field:"Back to the field",close:"Close",prev:"← ",next:" →",listTitle:"The whole portfolio",proto:"Prototype · placeholder objects and text",photo:"photo",video:"video",contact:"Get in touch",hi:"hi!"},
+  fr:{tag:"Communication et événements culturels : cinéma, musique, médias et médiation. Entre le Mexique et Toulouse.",hint:"Cliquez sur un objet pour explorer",list:"Vue liste",field:"Retour au champ",close:"Fermer",prev:"← ",next:" →",listTitle:"Tout le portfolio",proto:"Prototype · objets et textes d'exemple",photo:"photo",video:"vidéo",contact:"M'écrire",hi:"coucou !"}
 };
 
 const C = {
@@ -320,7 +331,7 @@ const esc = s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;
 
 function renderUI(){
   const u=UI[lang]; document.documentElement.lang=lang;
-  $("#tagline").textContent=u.tag; $("#hint span").textContent=u.hint; $("#proto").textContent=u.proto;
+  $("#tagline").textContent=u.tag; $("#meHi").textContent=u.hi; $("#meBtn").setAttribute("aria-label",C[lang].sobre.t); $("#hint span").textContent=u.hint; $("#proto").textContent=u.proto;
   $("#listBtn").textContent=u.list; $("#fieldBtn").textContent=u.field; $("#listTitle").textContent=u.listTitle; $("#closeBtn").textContent=u.close+" ×";
   document.querySelectorAll("#langs button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.lang===lang));
   labels.forEach((el,i)=>{ el.textContent=C[lang][SECTIONS[i].id].t; });
@@ -330,7 +341,7 @@ function renderUI(){
 function renderPanel(i){
   const s=SECTIONS[i], c=C[lang][s.id], u=UI[lang];
   $("#fname").textContent=s.id+".exe";
-  let h=`<p class="kicker">${esc(c.k)}</p><h2 id="pTitle">${esc(c.t)}</h2><p class="intro">${esc(c.i)}</p>`;
+  let h=(s.id==="sobre"?`<img class="me" src="media/ana.jpg" alt="Ana Georgina Velasco">`:"")+`<p class="kicker">${esc(c.k)}</p><h2 id="pTitle">${esc(c.t)}</h2><p class="intro">${esc(c.i)}</p>`;
   c.items.forEach((it,j)=>{
     const media=(s.media[j]||[]);
     h+=`<article class="item"><h3>${esc(it.t)}</h3>${it.m?`<p class="meta">${esc(it.m)}</p>`:""}<p class="d">${esc(it.d)}</p>`;
@@ -364,6 +375,7 @@ const labels=SECTIONS.map((s,i)=>{const b=document.createElement("button");b.cla
 
 document.querySelectorAll("#langs button").forEach(b=>b.addEventListener("click",()=>{lang=b.dataset.lang;try{localStorage.setItem("ana-lang",lang)}catch(e){}renderUI();}));
 $("#closeBtn").addEventListener("click",closePanel);
+$("#meBtn").addEventListener("click",()=>openSection(0));
 $("#prevBtn").addEventListener("click",()=>openSection((current+SECTIONS.length-1)%SECTIONS.length));
 $("#nextBtn").addEventListener("click",()=>openSection((current+1)%SECTIONS.length));
 $("#listBtn").addEventListener("click",()=>{$("#list").hidden=false;});
