@@ -392,6 +392,7 @@ button.chip{cursor:pointer;font-family:var(--mono)}
     <div class="pill" role="group" aria-label="Idioma / Language / Langue" id="langs">
       <button data-lang="es">ES</button><button data-lang="en">EN</button><button data-lang="fr">FR</button>
     </div>
+    <div class="pill"><button class="solo" id="floorBtn"><span id="floorIco">🏠</span></button></div>
     <div class="pill"><button class="solo" id="dayBtn"><span id="dayIco">🌙</span></button></div>
     <div class="pill"><button class="solo" id="listBtn"><span class="lbl" id="listLbl"></span><span class="ico" aria-hidden="true">☰</span></button></div>
   </div>
@@ -459,9 +460,9 @@ const EMBED = location.protocol.startsWith("http") && !/claude|anthropic/i.test(
    2) TEXTS in 3 languages (example copy, replace freely)
    ========================================================= */
 const UI = {
-  es:{tag:"Comunicación y eventos culturales: cine, música, medios y mediación. Entre México y Toulouse.",hint:"Arrastra para girar · toca un objeto para ver qué hacer · lánzalos",list:"Ver en lista",field:"Volver al campo",close:"Cerrar",prev:"← ",next:" →",listTitle:"Todo el portfolio",proto:"Prototipo · objetos y textos de ejemplo",photo:"foto",video:"video",contact:"Escríbeme",hi:"¡hola!",play:"Ver",openOn:"Abrir en",role:"Comunicación cultural, contenido y eventos",place:"Toulouse, Francia",mail:"✉ Escríbeme",copied:"¡Correo copiado!",openApp:"Abrir",watchOn:"Ver en",post:"Post",swipe:"Desliza para ver más →",gateHint:"Desliza el telón para entrar",gateBtn:"Entrar",enter:"Entrar",ready:"¡Todo listo!",profile:"Perfil",play2:"Jugar",score:"Puntos",best:"Récord",gameOver:"¡Perdiste!",again:"Otra vez",snakeTip:"Usa las flechas o desliza en la pantalla. Come tortillas para crecer.",actOpen:"Ver",actDraw:"Dibujar en la pared",actSnake:"Jugar Snake",actTv:"Ver la tele",tvName:"La tele",tvSoon1:"Videos de camescope",tvSoon2:"muy pronto 📼",tvSoonToast:"Pronto: videos de mi camescope 📼",wallSign:"Muro de notitas",emptyFrame:"¡Deja la tuya!",paintTitle:"Notita.exe — dibuja algo para el muro",namePh:"Tu nombre (opcional)",hang:"Colgar en la pared",cancel:"Cancelar",clear:"Borrar todo",size:"Grosor",tool_pencil:"Lápiz",tool_brush:"Pincel",tool_spray:"Aerosol",tool_fill:"Rellenar",tool_eraser:"Borrador",hung:"¡Colgado en la pared! Gracias 💚",localNote:"(por ahora se guarda solo en este navegador)",tooMany:"Ya dejaste varias notitas, intenta en un ratito 🙂",drawFirst:"Dibuja algo primero ✏️",by:"Notita de",anon:"Notita anónima",noteAlt:"Dibujo de una visita",toNight:"Hacer de noche",toDay:"Hacer de día",no3d:"El modo día/noche vive en el mundo 3D",ldScan:"Acomodando el depa en su nube…",scanFail:"No se pudo cargar el depa 3D, pero todo lo demás funciona",spotTote:"La tote del FBAL",spotKitchen:"La cocina",spotKindle:"El Kindle",spotBose:"La bocina",actTote:"Ver mis experiencias en festivales",actAteliers:"Los ateliers de Día de Muertos",actComida:"Recetas: @comidariquita",actResearch:"Leer mi investigación",actBooks:"Recomendaciones de libros",actPlaylist:"Abrir mi playlist",actSongs:"Recomendar una rolita",recsBooksT:"Club de lecturas",recsSongsT:"Rolitas recomendadas",recsMine:"Mis recomendaciones: muy pronto…",recsEmpty:"Sé la primera persona en recomendar algo 💚",recsPhB:"Libro + por qué te gustó",recsPhS:"Canción — artista",recsSend:"Recomendar",recsFirst:"Escribe tu recomendación primero 🙂",recsThanks:"¡Gracias por la recomendación! 💚"},
-  en:{tag:"Communication and cultural events: film, music, media and outreach. Between Mexico and Toulouse.",hint:"Drag to turn · tap an object to see what to do · throw them",list:"List view",field:"Back to the field",close:"Close",prev:"← ",next:" →",listTitle:"The whole portfolio",proto:"Prototype · placeholder objects and text",photo:"photo",video:"video",contact:"Get in touch",hi:"hi!",play:"Watch",openOn:"Open on",role:"Cultural communication, content & events",place:"Toulouse, France",mail:"✉ Email me",copied:"Email copied!",openApp:"Open",watchOn:"Watch on",post:"Post",swipe:"Swipe for more →",gateHint:"Slide the curtain to enter",gateBtn:"Enter",enter:"Enter",ready:"All set!",profile:"Profile",play2:"Play",score:"Score",best:"Best",gameOver:"Game over",again:"Play again",snakeTip:"Use the arrow keys or swipe on the screen. Eat tortillas to grow.",actOpen:"See",actDraw:"Draw on the wall",actSnake:"Play Snake",actTv:"Watch TV",tvName:"The TV",tvSoon1:"Camcorder videos",tvSoon2:"coming soon 📼",tvSoonToast:"Coming soon: my camcorder videos 📼",wallSign:"Notes wall",emptyFrame:"Leave yours!",paintTitle:"Note.exe — draw something for the wall",namePh:"Your name (optional)",hang:"Hang it on the wall",cancel:"Cancel",clear:"Clear all",size:"Size",tool_pencil:"Pencil",tool_brush:"Brush",tool_spray:"Spray",tool_fill:"Fill",tool_eraser:"Eraser",hung:"Hung on the wall! Thank you 💚",localNote:"(saved in this browser for now)",tooMany:"You left several notes already, try again in a bit 🙂",drawFirst:"Draw something first ✏️",by:"Note by",anon:"Anonymous note",noteAlt:"A visitor's drawing",toNight:"Switch to night",toDay:"Switch to day",no3d:"Day/night lives in the 3D world",ldScan:"Parking the apartment on its cloud…",scanFail:"The 3D apartment could not load, but everything else works",spotTote:"The FBAL tote",spotKitchen:"The kitchen",spotKindle:"The Kindle",spotBose:"The speaker",actTote:"See my festival experience",actAteliers:"The Day of the Dead workshops",actComida:"Recipes: @comidariquita",actResearch:"Read my research",actBooks:"Book recommendations",actPlaylist:"Open my playlist",actSongs:"Recommend a song",recsBooksT:"Little book club",recsSongsT:"Recommended songs",recsMine:"My picks: coming soon…",recsEmpty:"Be the first to recommend something 💚",recsPhB:"Book + why you loved it",recsPhS:"Song — artist",recsSend:"Recommend",recsFirst:"Write your recommendation first 🙂",recsThanks:"Thanks for the recommendation! 💚"},
-  fr:{tag:"Communication et événements culturels : cinéma, musique, médias et médiation. Entre le Mexique et Toulouse.",hint:"Glissez pour tourner · touchez un objet pour voir les actions · lancez-les",list:"Vue liste",field:"Retour au champ",close:"Fermer",prev:"← ",next:" →",listTitle:"Tout le portfolio",proto:"Prototype · objets et textes d'exemple",photo:"photo",video:"vidéo",contact:"M'écrire",hi:"coucou !",play:"Voir",openOn:"Ouvrir sur",role:"Communication culturelle, contenu & événements",place:"Toulouse, France",mail:"✉ M'écrire",copied:"Adresse copiée !",openApp:"Ouvrir",watchOn:"Voir sur",post:"Post",swipe:"Faites défiler →",gateHint:"Écartez le rideau pour entrer",gateBtn:"Entrer",enter:"Entrer",ready:"C'est prêt !",profile:"Profil",play2:"Jouer",score:"Score",best:"Record",gameOver:"Perdu !",again:"Rejouer",snakeTip:"Flèches du clavier ou glissez sur l'écran. Mangez des tortillas pour grandir.",actOpen:"Voir",actDraw:"Dessiner sur le mur",actSnake:"Jouer à Snake",actTv:"Regarder la télé",tvName:"La télé",tvSoon1:"Vidéos caméscope",tvSoon2:"bientôt 📼",tvSoonToast:"Bientôt : mes vidéos de caméscope 📼",wallSign:"Mur des petits mots",emptyFrame:"Laissez le vôtre !",paintTitle:"PetitMot.exe — dessinez pour le mur",namePh:"Votre prénom (facultatif)",hang:"Accrocher au mur",cancel:"Annuler",clear:"Tout effacer",size:"Épaisseur",tool_pencil:"Crayon",tool_brush:"Pinceau",tool_spray:"Aérosol",tool_fill:"Remplir",tool_eraser:"Gomme",hung:"Accroché au mur ! Merci 💚",localNote:"(enregistré dans ce navigateur pour l'instant)",tooMany:"Vous avez déjà laissé plusieurs mots, réessayez dans un moment 🙂",drawFirst:"Dessinez d'abord quelque chose ✏️",by:"Petit mot de",anon:"Petit mot anonyme",noteAlt:"Dessin d'un visiteur",toNight:"Passer à la nuit",toDay:"Passer au jour",no3d:"Le mode jour/nuit vit dans le monde 3D",ldScan:"On installe l'appart sur son nuage…",scanFail:"L'appart 3D n'a pas pu charger, mais tout le reste fonctionne",spotTote:"Le tote du FBAL",spotKitchen:"La cuisine",spotKindle:"Le Kindle",spotBose:"L'enceinte",actTote:"Voir mes expériences en festival",actAteliers:"Les ateliers Día de Muertos",actComida:"Recettes : @comidariquita",actResearch:"Lire ma recherche",actBooks:"Recommandations de lectures",actPlaylist:"Ouvrir ma playlist",actSongs:"Recommander une chanson",recsBooksT:"Petit club de lecture",recsSongsT:"Chansons recommandées",recsMine:"Mes recos : bientôt…",recsEmpty:"Soyez la première personne à recommander 💚",recsPhB:"Livre + pourquoi vous l'aimez",recsPhS:"Chanson — artiste",recsSend:"Recommander",recsFirst:"Écrivez d'abord votre recommandation 🙂",recsThanks:"Merci pour la recommandation ! 💚"}
+  es:{tag:"Comunicación y eventos culturales: cine, música, medios y mediación. Entre México y Toulouse.",hint:"Arrastra para girar 360° · toca el piso para acercarte · toca las etiquetas y objetos",list:"Ver en lista",field:"Volver al campo",close:"Cerrar",prev:"← ",next:" →",listTitle:"Todo el portfolio",proto:"Prototipo · objetos y textos de ejemplo",photo:"foto",video:"video",contact:"Escríbeme",hi:"¡hola!",play:"Ver",openOn:"Abrir en",role:"Comunicación cultural, contenido y eventos",place:"Toulouse, Francia",mail:"✉ Escríbeme",copied:"¡Correo copiado!",openApp:"Abrir",watchOn:"Ver en",post:"Post",swipe:"Desliza para ver más →",gateHint:"Desliza el telón para entrar",gateBtn:"Entrar",enter:"Entrar",ready:"¡Todo listo!",profile:"Perfil",play2:"Jugar",score:"Puntos",best:"Récord",gameOver:"¡Perdiste!",again:"Otra vez",snakeTip:"Usa las flechas o desliza en la pantalla. Come tortillas para crecer.",actOpen:"Ver",actDraw:"Dibujar en la pared",actSnake:"Jugar Snake",actTv:"Ver la tele",tvName:"La tele",tvSoon1:"Videos de camescope",tvSoon2:"muy pronto 📼",tvSoonToast:"Pronto: videos de mi camescope 📼",wallSign:"Muro de notitas",emptyFrame:"¡Deja la tuya!",paintTitle:"Notita.exe — dibuja algo para el muro",namePh:"Tu nombre (opcional)",hang:"Colgar en la pared",cancel:"Cancelar",clear:"Borrar todo",size:"Grosor",tool_pencil:"Lápiz",tool_brush:"Pincel",tool_spray:"Aerosol",tool_fill:"Rellenar",tool_eraser:"Borrador",hung:"¡Colgado en la pared! Gracias 💚",localNote:"(por ahora se guarda solo en este navegador)",tooMany:"Ya dejaste varias notitas, intenta en un ratito 🙂",drawFirst:"Dibuja algo primero ✏️",by:"Notita de",anon:"Notita anónima",noteAlt:"Dibujo de una visita",toUp:"Ver también la mezzanine",toDown:"Volver a la planta baja",upOn:"Depa completo, con mezzanine",upOff:"Planta baja, paredes cortadas",boseTag:"Mi playlist",toNight:"Hacer de noche",toDay:"Hacer de día",no3d:"El modo día/noche vive en el mundo 3D",ldScan:"Acomodando el depa en su nube…",scanFail:"No se pudo cargar el depa 3D, pero todo lo demás funciona",spotTote:"La tote del FBAL",spotKitchen:"La cocina",spotKindle:"El Kindle",spotBose:"La bocina",actTote:"Ver mis experiencias en festivales",actAteliers:"Los ateliers de Día de Muertos",actComida:"Recetas: @comidariquita",actResearch:"Leer mi investigación",actBooks:"Recomendaciones de libros",actPlaylist:"Abrir mi playlist",actSongs:"Recomendar una rolita",recsBooksT:"Club de lecturas",recsSongsT:"Rolitas recomendadas",recsMine:"Mis recomendaciones: muy pronto…",recsEmpty:"Sé la primera persona en recomendar algo 💚",recsPhB:"Libro + por qué te gustó",recsPhS:"Canción — artista",recsSend:"Recomendar",recsFirst:"Escribe tu recomendación primero 🙂",recsThanks:"¡Gracias por la recomendación! 💚"},
+  en:{tag:"Communication and cultural events: film, music, media and outreach. Between Mexico and Toulouse.",hint:"Drag to turn 360° · tap the floor to move closer · tap the labels and objects",list:"List view",field:"Back to the field",close:"Close",prev:"← ",next:" →",listTitle:"The whole portfolio",proto:"Prototype · placeholder objects and text",photo:"photo",video:"video",contact:"Get in touch",hi:"hi!",play:"Watch",openOn:"Open on",role:"Cultural communication, content & events",place:"Toulouse, France",mail:"✉ Email me",copied:"Email copied!",openApp:"Open",watchOn:"Watch on",post:"Post",swipe:"Swipe for more →",gateHint:"Slide the curtain to enter",gateBtn:"Enter",enter:"Enter",ready:"All set!",profile:"Profile",play2:"Play",score:"Score",best:"Best",gameOver:"Game over",again:"Play again",snakeTip:"Use the arrow keys or swipe on the screen. Eat tortillas to grow.",actOpen:"See",actDraw:"Draw on the wall",actSnake:"Play Snake",actTv:"Watch TV",tvName:"The TV",tvSoon1:"Camcorder videos",tvSoon2:"coming soon 📼",tvSoonToast:"Coming soon: my camcorder videos 📼",wallSign:"Notes wall",emptyFrame:"Leave yours!",paintTitle:"Note.exe — draw something for the wall",namePh:"Your name (optional)",hang:"Hang it on the wall",cancel:"Cancel",clear:"Clear all",size:"Size",tool_pencil:"Pencil",tool_brush:"Brush",tool_spray:"Spray",tool_fill:"Fill",tool_eraser:"Eraser",hung:"Hung on the wall! Thank you 💚",localNote:"(saved in this browser for now)",tooMany:"You left several notes already, try again in a bit 🙂",drawFirst:"Draw something first ✏️",by:"Note by",anon:"Anonymous note",noteAlt:"A visitor's drawing",toUp:"Show the mezzanine too",toDown:"Back to the ground floor",upOn:"Whole apartment, with mezzanine",upOff:"Ground floor, walls cut",boseTag:"My playlist",toNight:"Switch to night",toDay:"Switch to day",no3d:"Day/night lives in the 3D world",ldScan:"Parking the apartment on its cloud…",scanFail:"The 3D apartment could not load, but everything else works",spotTote:"The FBAL tote",spotKitchen:"The kitchen",spotKindle:"The Kindle",spotBose:"The speaker",actTote:"See my festival experience",actAteliers:"The Day of the Dead workshops",actComida:"Recipes: @comidariquita",actResearch:"Read my research",actBooks:"Book recommendations",actPlaylist:"Open my playlist",actSongs:"Recommend a song",recsBooksT:"Little book club",recsSongsT:"Recommended songs",recsMine:"My picks: coming soon…",recsEmpty:"Be the first to recommend something 💚",recsPhB:"Book + why you loved it",recsPhS:"Song — artist",recsSend:"Recommend",recsFirst:"Write your recommendation first 🙂",recsThanks:"Thanks for the recommendation! 💚"},
+  fr:{tag:"Communication et événements culturels : cinéma, musique, médias et médiation. Entre le Mexique et Toulouse.",hint:"Glissez pour tourner à 360° · touchez le sol pour approcher · touchez les étiquettes et objets",list:"Vue liste",field:"Retour au champ",close:"Fermer",prev:"← ",next:" →",listTitle:"Tout le portfolio",proto:"Prototype · objets et textes d'exemple",photo:"photo",video:"vidéo",contact:"M'écrire",hi:"coucou !",play:"Voir",openOn:"Ouvrir sur",role:"Communication culturelle, contenu & événements",place:"Toulouse, France",mail:"✉ M'écrire",copied:"Adresse copiée !",openApp:"Ouvrir",watchOn:"Voir sur",post:"Post",swipe:"Faites défiler →",gateHint:"Écartez le rideau pour entrer",gateBtn:"Entrer",enter:"Entrer",ready:"C'est prêt !",profile:"Profil",play2:"Jouer",score:"Score",best:"Record",gameOver:"Perdu !",again:"Rejouer",snakeTip:"Flèches du clavier ou glissez sur l'écran. Mangez des tortillas pour grandir.",actOpen:"Voir",actDraw:"Dessiner sur le mur",actSnake:"Jouer à Snake",actTv:"Regarder la télé",tvName:"La télé",tvSoon1:"Vidéos caméscope",tvSoon2:"bientôt 📼",tvSoonToast:"Bientôt : mes vidéos de caméscope 📼",wallSign:"Mur des petits mots",emptyFrame:"Laissez le vôtre !",paintTitle:"PetitMot.exe — dessinez pour le mur",namePh:"Votre prénom (facultatif)",hang:"Accrocher au mur",cancel:"Annuler",clear:"Tout effacer",size:"Épaisseur",tool_pencil:"Crayon",tool_brush:"Pinceau",tool_spray:"Aérosol",tool_fill:"Remplir",tool_eraser:"Gomme",hung:"Accroché au mur ! Merci 💚",localNote:"(enregistré dans ce navigateur pour l'instant)",tooMany:"Vous avez déjà laissé plusieurs mots, réessayez dans un moment 🙂",drawFirst:"Dessinez d'abord quelque chose ✏️",by:"Petit mot de",anon:"Petit mot anonyme",noteAlt:"Dessin d'un visiteur",toUp:"Voir aussi la mezzanine",toDown:"Retour au rez-de-chaussée",upOn:"Appart entier, avec mezzanine",upOff:"Rez-de-chaussée, murs coupés",boseTag:"Ma playlist",toNight:"Passer à la nuit",toDay:"Passer au jour",no3d:"Le mode jour/nuit vit dans le monde 3D",ldScan:"On installe l'appart sur son nuage…",scanFail:"L'appart 3D n'a pas pu charger, mais tout le reste fonctionne",spotTote:"Le tote du FBAL",spotKitchen:"La cuisine",spotKindle:"Le Kindle",spotBose:"L'enceinte",actTote:"Voir mes expériences en festival",actAteliers:"Les ateliers Día de Muertos",actComida:"Recettes : @comidariquita",actResearch:"Lire ma recherche",actBooks:"Recommandations de lectures",actPlaylist:"Ouvrir ma playlist",actSongs:"Recommander une chanson",recsBooksT:"Petit club de lecture",recsSongsT:"Chansons recommandées",recsMine:"Mes recos : bientôt…",recsEmpty:"Soyez la première personne à recommander 💚",recsPhB:"Livre + pourquoi vous l'aimez",recsPhS:"Chanson — artiste",recsSend:"Recommander",recsFirst:"Écrivez d'abord votre recommandation 🙂",recsThanks:"Merci pour la recommandation ! 💚"}
 };
 
 const C = {
@@ -613,7 +614,7 @@ const plain = t=>String(t).replace(/\*\*/g,"").replace(/\n+/g," ");
 function renderUI(){
   const u=UI[lang]; document.documentElement.lang=lang;
   renderLoader(u); renderSim(u); $("#hint span").textContent=u.hint;
-  $("#listLbl").textContent=u.list; syncDayBtn(); $("#listBtn").setAttribute("aria-label",u.list); $("#fieldBtn").textContent=u.field; $("#listTitle").textContent=u.listTitle; $("#closeBtn").textContent=u.close+" ×";
+  $("#listLbl").textContent=u.list; syncDayBtn(); syncFloorBtn(); if(window.__boseLabel) window.__boseLabel(); $("#listBtn").setAttribute("aria-label",u.list); $("#fieldBtn").textContent=u.field; $("#listTitle").textContent=u.listTitle; $("#closeBtn").textContent=u.close+" ×";
   document.querySelectorAll("#langs button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.lang===lang));
   labels.forEach((el,i)=>{ el.textContent=C[lang][SECTIONS[i].id].t; });
   $("#grid").innerHTML=SECTIONS.map((s,i)=>{const c=C[lang][s.id];return `<button class="card" data-i="${i}"><p class="kicker">${esc(c.k)}</p><h3>${esc(c.t)}</h3><p>${esc(plain(c.i))}</p></button>`}).join("");
@@ -756,6 +757,10 @@ $("#copyMail").addEventListener("click",()=>{ const b=$("#copyMail"), t=EMAIL;
 function syncDayBtn(){ const b=$("#dayBtn"); if(!b) return; const night=!!(window.__isNight&&window.__isNight());
   $("#dayIco").textContent=night?"☀️":"🌙"; const u=UI[lang]; b.title=night?u.toDay:u.toNight; b.setAttribute("aria-label",b.title); }
 $("#dayBtn").addEventListener("click",()=>{ if(window.__setNight) window.__setNight(!(window.__isNight&&window.__isNight())); else toast(UI[lang].no3d); });
+
+function syncFloorBtn(){ const b=$("#floorBtn"); if(!b) return; const up=!!(window.__isUpper&&window.__isUpper());
+  $("#floorIco").textContent=up?"⬇️":"🏠"; const u=UI[lang]; b.title=up?u.toDown:u.toUp; b.setAttribute("aria-label",b.title); }
+$("#floorBtn").addEventListener("click",()=>{ if(window.__setUpper){ window.__setUpper(!window.__isUpper()); toast(window.__isUpper()?UI[lang].upOn:UI[lang].upOff); } else toast(UI[lang].no3d); });
 
 /* ---------- toast ---------- */
 let toastT=null;
@@ -926,10 +931,11 @@ addEventListener("keydown",e=>{ if(!SN.alive||!document.getElementById("snake"))
 
 /* =========================================================
    4) EL DEPA (three.js): Ana's real apartment scan floating in a
-   dreamy cosmos. Front-face culling gives the dollhouse cut-away.
-   Drag empty space to orbit · tap a glowing spot or object ·
-   drag a floating object to throw it. Add ?debug to the URL and
-   tap anywhere to read world coordinates (for adjusting SPOTS).
+   dreamy cosmos. Walls are cut at ground-floor height and the ones
+   facing the camera hide themselves (dollhouse view).
+   Drag to orbit 360° · tap the floor to move there · tap a spot or
+   object for its actions · drag a small object to throw it.
+   Add ?debug to the URL and tap to read coordinates (for SPOTS).
    ========================================================= */
 let hover=-1;
 const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -948,11 +954,13 @@ THREE.ColorManagement.legacyMode=false;
 renderer.setPixelRatio(Math.min(devicePixelRatio,2));
 renderer.outputEncoding=THREE.sRGBEncoding;
 renderer.toneMapping=THREE.ACESFilmicToneMapping; renderer.toneMappingExposure=1.0;
+renderer.localClippingEnabled=true;
 
 const scene=new THREE.Scene();
 const camera=new THREE.PerspectiveCamera(38,1,.1,600);
 const canvasEl=$("#scene");
-const B={xmin:-9,xmax:9,zmin:-7.5,zmax:9.5};   /* where thrown objects can fly */
+const FP={x0:-4.3,x1:2.42,z0:-2.95,z1:2.12}, CX=(FP.x0+FP.x1)/2, CZ=(FP.z0+FP.z1)/2, CUT=2.05;   /* apartment footprint + wall cut height */
+const B={xmin:FP.x0+.15,xmax:FP.x1-.15,zmin:FP.z0+.15,zmax:FP.z1-.15};   /* where thrown objects can roll */
 
 /* ---------- helpers ---------- */
 function canvasTex(w,h,draw){const cv=document.createElement("canvas");cv.width=w;cv.height=h;draw(cv.getContext("2d"),w,h);const t=new THREE.CanvasTexture(cv);t.encoding=THREE.sRGBEncoding;t.anisotropy=renderer.capabilities.getMaxAnisotropy();return t;}
@@ -1012,22 +1020,43 @@ const clouds=[];
   const a=k/8*Math.PI*2, r=rnd(32,52); g.position.set(Math.cos(a)*r,rnd(-12,9),Math.sin(a)*r); g.userData={a,r,sp:rnd(.006,.016)}; clouds.push(g); scene.add(g);}
  clouds.mat=cm;}
 
-/* ---------- floating island under the depa ---------- */
-{const dirt=std("#9a6a3f",{flatShading:true});
- put(new THREE.BoxGeometry(10.2,.5,7.2),dirt,[0,-.27,0]);
- const cone=put(new THREE.ConeGeometry(6.6,4.6,4,3),std("#8a5a35",{flatShading:true}),[0,-2.7,0],[Math.PI,Math.PI/4,0]);
+/* ---------- floating island, clean floor, wall shell and windows (hand-built) ---------- */
+const shellTint=new THREE.Color("#f3ece0"), paneCol=new THREE.Color("#bfe6ff"); let paneStars=null;
+{const W=FP.x1-FP.x0, D=FP.z1-FP.z0, dirt=std("#9a6a3f",{flatShading:true});
+ put(new THREE.BoxGeometry(W+.5,.5,D+.5),dirt,[CX,-.29,CZ]);
+ const cone=put(new THREE.ConeGeometry(4.9,4.2,4,3),std("#8a5a35",{flatShading:true}),[CX,-2.6,CZ],[Math.PI,Math.PI/4,0]);
  const pos=cone.geometry.attributes.position;
- for(let i=0;i<pos.count;i++){ if(Math.abs(pos.getY(i))<2.2){ pos.setX(i,pos.getX(i)*rnd(.88,1.12)); pos.setZ(i,pos.getZ(i)*rnd(.88,1.12)); } }
+ for(let i=0;i<pos.count;i++){ if(Math.abs(pos.getY(i))<2){ pos.setX(i,pos.getX(i)*rnd(.88,1.12)); pos.setZ(i,pos.getZ(i)*rnd(.88,1.12)); } }
  cone.geometry.computeVertexNormals();
- [[-4,-1.8,3,"#7d8a96"],[4.6,-2.6,-2,"#6f7b86"],[.5,-4,2.5,"#86929e"]].forEach(([x,y,z,c])=>put(new THREE.DodecahedronGeometry(rnd(.45,.8)),std(c,{flatShading:true}),[x,y,z],[rnd(0,3),rnd(0,3),0]));}
+ [[-4.2,-1.7,2,"#7d8a96"],[2.6,-2.4,-2,"#6f7b86"],[-.5,-3.8,1.8,"#86929e"]].forEach(([x,y,z,c])=>put(new THREE.DodecahedronGeometry(rnd(.4,.7)),std(c,{flatShading:true}),[x,y,z],[rnd(0,3),rnd(0,3),0]));
+ /* wooden floor under the scan: fills any hole in the scanned floor */
+ const planks=canvasTex(256,256,(x,w,h)=>{const rows=8,rh=h/rows;for(let r=0;r<rows;r++){let X=-(r%2)*48;while(X<w){const L=rnd(70,130);x.fillStyle=["#b98a58","#ad7d4c","#c39563","#b58452"][Math.floor(Math.random()*4)];x.fillRect(X,r*rh,L,rh);x.fillStyle="rgba(70,40,15,.35)";x.fillRect(X,r*rh,2,rh);X+=L;}x.fillStyle="rgba(70,40,15,.4)";x.fillRect(0,r*rh,w,2);}});
+ planks.wrapS=planks.wrapT=THREE.RepeatWrapping; planks.repeat.set(5,4);
+ put(new THREE.PlaneGeometry(W,D),new THREE.MeshBasicMaterial({map:planks,color:shellTint}),[CX,-.025,CZ],[-Math.PI/2,0,0]);
+ /* clean wall shell behind the scanned walls: single-sided, so the walls facing you hide themselves */
+ const wall=new THREE.MeshBasicMaterial({color:shellTint});
+ put(new THREE.PlaneGeometry(W,CUT),wall,[CX,CUT/2,FP.z0],null);                    /* south wall, faces north */
+ put(new THREE.PlaneGeometry(W,CUT),wall,[CX,CUT/2,FP.z1],[0,Math.PI,0]);           /* north wall, faces south */
+ put(new THREE.PlaneGeometry(D,CUT),wall,[FP.x0,CUT/2,CZ],[0,Math.PI/2,0]);         /* west wall, faces east */
+ put(new THREE.PlaneGeometry(D,CUT),wall,[FP.x1,CUT/2,CZ],[0,-Math.PI/2,0]);        /* east wall, faces west */
+ /* windows on the north wall, open onto the cosmos */
+ const frame=new THREE.MeshBasicMaterial({color:"#ffffff"}), pane=new THREE.MeshBasicMaterial({color:paneCol});
+ const starTex=canvasTex(128,128,(x,w,h)=>{x.clearRect(0,0,w,h);for(let i=0;i<46;i++){x.fillStyle=["#fff","#ffd9f0","#cfe3ff"][i%3];const r=Math.random()*1.6+.4;x.beginPath();x.arc(Math.random()*w,Math.random()*h,r,0,Math.PI*2);x.fill();}});
+ paneStars=new THREE.MeshBasicMaterial({map:starTex,transparent:true,opacity:0,depthWrite:false});
+ [[-3.35,1.1],[-1.05,1.3],[1.5,1.0]].forEach(([x,w])=>{ const g=new THREE.Group(); g.position.set(x,1.38,FP.z1-.03); g.rotation.y=Math.PI; scene.add(g);
+   const hgt=1.2; put(new THREE.PlaneGeometry(w,hgt),pane,[0,0,0],null,g); put(new THREE.PlaneGeometry(w,hgt),paneStars,[0,0,.004],null,g);
+   [[0,hgt/2,w+.12,.07],[0,-hgt/2,w+.12,.07],[-w/2,0,.07,hgt+.1],[w/2,0,.07,hgt+.1],[0,0,.045,hgt],[0,0,w,.045]].forEach(([fx,fy,fw,fh])=>put(new THREE.BoxGeometry(fw,fh,.05),frame,[fx,fy,.02],null,g));
+   put(new THREE.BoxGeometry(w+.24,.05,.16),frame,[0,-hgt/2-.05,.07],null,g); }); }
 
 /* ---------- the scan ---------- */
-let scanMesh=null; const scanTint=new THREE.Color("#ffffff");
+let scanMesh=null; const scanTint=new THREE.Color("#ffffff"), cutPlane=new THREE.Plane(new THREE.Vector3(0,-1,0),CUT);
+let upper=false;
+window.__setUpper=u=>{ upper=!!u; cutPlane.constant=upper?99:CUT; syncFloorBtn(); }; window.__isUpper=()=>upper;
 function onScan(gl){
   gl.scene.traverse(o=>{ if(o.isMesh){
     const map=o.material&&o.material.map;
     if(map){ map.encoding=THREE.sRGBEncoding; map.anisotropy=renderer.capabilities.getMaxAnisotropy(); }
-    o.material=new THREE.MeshBasicMaterial({map:map||null,color:scanTint,side:THREE.FrontSide,toneMapped:true});
+    o.material=new THREE.MeshBasicMaterial({map:map||null,color:scanTint,side:THREE.FrontSide,clippingPlanes:[cutPlane]});
     o.frustumCulled=false; scanMesh=o; } });
   scene.add(gl.scene); window.__scanReady=true; }
 (function loadScan(urls){ const u=urls.shift();
@@ -1035,9 +1064,10 @@ function onScan(gl){
 })(["media/depa.glb","media/depa.glb.mp4"]);
 setTimeout(()=>{ window.__scanReady=true; },18000);
 
-/* ---------- the TV (faces the sofa) ---------- */
+/* ---------- the TV: in the living room, turned towards you ---------- */
+const TV_POS=[-1.55,0,.5];
 const tv={screen:null,video:null,i:0,tex:null,noise:null,f:-1};
-{const g=new THREE.Group(); g.position.set(-2.35,0,-.42); g.rotation.y=Math.PI; scene.add(g);
+{const g=new THREE.Group(); g.position.set(...TV_POS); g.rotation.y=.62; g.scale.setScalar(.82); scene.add(g);
  const white=std("#f7f5f0",{roughness:.5});
  put(new THREE.BoxGeometry(1.5,.46,.5),white,[0,.23,0],null,g);
  put(new THREE.BoxGeometry(1.08,.84,.7),std("#cfc8b8",{roughness:.45}),[0,.9,-.04],null,g);
@@ -1058,10 +1088,10 @@ function drawNoise(){ if(tv.video) return; const x=tv.noise.getContext("2d"),w=1
   x.fillText(UI[lang].tvSoon1,w/2,58); x.font="11px system-ui,sans-serif"; x.fillText(UI[lang].tvSoon2,w/2,73); tv.tex.needsUpdate=true; }
 
 /* ---------- notes wall: on the big wall behind the sofa ---------- */
-const WALL_SLOTS=[]; {for(let r=0;r<2;r++) for(let c=0;c<6;c++) WALL_SLOTS.push([-3.95+c*.56,2.08-r*.7,-2.86]);}
+const WALL_SLOTS=[]; {for(let r=0;r<2;r++) for(let c=0;c<6;c++) WALL_SLOTS.push([-3.25+c*.56,1.74-r*.47,-2.76]);}
 const wallGroup=new THREE.Group(); scene.add(wallGroup);
 {const sign=canvasTex(512,96,(x,w,h)=>{x.fillStyle="#fff7d6";x.fillRect(0,0,w,h);x.strokeStyle="#f2c230";x.lineWidth=8;x.strokeRect(4,4,w-8,h-8);x.fillStyle="#173a5e";x.font="bold 44px system-ui,sans-serif";x.textAlign="center";x.textBaseline="middle";x.fillText("✏️ "+UI[lang].wallSign,w/2,h/2+2);});
- put(new THREE.PlaneGeometry(1.7,.33),new THREE.MeshBasicMaterial({map:sign,toneMapped:false}),[-2.5,2.62,-2.86]);}
+ put(new THREE.PlaneGeometry(1.5,.29),new THREE.MeshBasicMaterial({map:sign,toneMapped:false}),[-1.85,2.16,-2.76]);}
 const frameMat=std("#c99a62"), texCache=new Map();
 const emptyTex=canvasTex(160,120,(x,w,h)=>{x.fillStyle="#fffdf6";x.fillRect(0,0,w,h);x.setLineDash([6,5]);x.strokeStyle="#c9bfa8";x.lineWidth=3;x.strokeRect(10,10,w-20,h-20);x.fillStyle="#9a8f78";x.font="bold 15px system-ui,sans-serif";x.textAlign="center";x.fillText("+",w/2,h/2-4);x.font="12px system-ui,sans-serif";x.fillText(UI[lang].emptyFrame,w/2,h/2+16);});
 function rebuildWall(){
@@ -1076,20 +1106,22 @@ function rebuildWall(){
 wallChanged=rebuildWall; rebuildWall(); loadWall();
 
 /* ---------- glowing spots on Ana's real things ----------
-   Coordinates in meters; add ?debug to the URL and tap the scan
-   to read coordinates when adjusting. */
+   p = position in meters. `sec` = the portfolio section that lives there.
+   Add ?debug to the URL and tap the depa to read coordinates. */
 const SPOTS=[
- {id:"tote",   p:[ 0.52,1.58, 0.49], col:"#4fc3ff"},
- {id:"kitchen",p:[ 1.08,1.18,-2.11], col:"#ffb84d"},
- {id:"kindle", p:[-1.37,0.72,-1.36], col:"#8be38f"},
- {id:"bose",   p:[-3.60,1.00,-0.26], col:"#c59fff"}];
+ {id:"tote",   sec:"eventos",       p:[ 0.52,1.50, 0.49], col:"#4fc3ff"},
+ {id:"kitchen",sec:"mediacion",     p:[ 1.08,1.12,-2.20], col:"#ffb84d"},
+ {id:"kindle", sec:"investigacion", p:[-1.20,0.62,-1.35], col:"#8be38f"},
+ {id:"bose",   sec:null,            p:[-3.60,1.00,-0.26], col:"#c59fff"}];
+/* small objects resting on real furniture: [x, height of the surface, z] */
+const MINI={sobre:[-1.85,.45,-1.05],comunicacion:[-1.2,.35,1.5],diseno:[-2.1,.35,1.5],medios:[-2.55,.48,-1.5],apps:[-1.5,.47,-2.3]};
 const sparkTex=c=>canvasTex(96,96,(x,w)=>{x.translate(w/2,w/2);x.fillStyle=c;x.beginPath();
   for(let i=0;i<4;i++){x.rotate(Math.PI/2);x.moveTo(0,0);x.quadraticCurveTo(5,5,0,42);x.quadraticCurveTo(-5,5,0,0);}x.fill();
   const g=x.createRadialGradient(0,0,0,0,0,16);g.addColorStop(0,"rgba(255,255,255,.95)");g.addColorStop(1,"rgba(255,255,255,0)");x.fillStyle=g;x.fillRect(-16,-16,32,32);});
 SPOTS.forEach((s,i)=>{
-  const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:sparkTex(s.col),depthWrite:false,transparent:true,fog:false}));
-  sp.position.set(s.p[0],s.p[1]+.34,s.p[2]); sp.scale.set(.42,.42,1); scene.add(sp); s.marker=sp;
-  const hit=put(new THREE.SphereGeometry(.3,10,8),new THREE.MeshBasicMaterial({transparent:true,opacity:0,depthWrite:false}),s.p);
+  const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:sparkTex(s.col),depthWrite:false,depthTest:false,transparent:true,fog:false}));
+  sp.position.set(s.p[0],s.p[1]+.22,s.p[2]); sp.scale.set(.3,.3,1); sp.renderOrder=5; scene.add(sp); s.marker=sp;
+  const hit=put(new THREE.SphereGeometry(.34,10,8),new THREE.MeshBasicMaterial({transparent:true,opacity:0,depthWrite:false}),s.p);
   hit.userData.spot=i; pickables.push(hit); });
 
 /* ---------- materials + placeholder objects (swap for your scans in SECTIONS) ---------- */
@@ -1145,32 +1177,40 @@ const SHAPES={
   add(g,rbox(.5,.12,.03,.01),chrome(),[0,.2,.19]);add(g,rbox(.32,.06,.03,.01),chrome(),[0,.04,.19]);return g;}
 };
 
-/* ---------- the floating section objects: a ring around the depa ---------- */
+/* ---------- where each section lives inside the depa ----------
+   Five small objects rest on real furniture; the other sections are
+   anchored on Ana's real things (tote, kitchen, Kindle) and on the TV. */
+const MS=.36;
 const objs=SECTIONS.map((s,i)=>{
-  const root=new THREE.Group(), spin=new THREE.Group(), model=SHAPES[s.shape]();
-  spin.add(model); root.add(spin); scene.add(root);
-  model.traverse(o=>{ if(o.isMesh){ o.userData.si=i; pickables.push(o);} });
-  const az=-2.3+i*(4.6/(SECTIONS.length-1));
-  const home=new THREE.Vector3(Math.sin(az)*7.4,1.7+((i*2)%3)*.95+(i%2)*.45,Math.cos(az)*6.4);
-  const o={root,spin,home,vel:new THREE.Vector3(),av:new THREE.Vector3(),state:"home",rest:0,scale:1,hs:1,r:.62,phase:i*.9};
-  if(s.model && THREE.GLTFLoader){ new THREE.GLTFLoader().load(s.model,gl=>{
+  const root=new THREE.Group(), spin=new THREE.Group(); root.add(spin); scene.add(root);
+  const o={root,spin,home:new THREE.Vector3(),vel:new THREE.Vector3(),av:new THREE.Vector3(),state:"home",rest:0,hs:1,r:.2,phase:i*.9,fixed:true,lift:.45,spot:-1};
+  const mini=MINI[s.id], sk=SPOTS.findIndex(p=>p.sec===s.id);
+  if(mini){ const model=SHAPES[s.shape](); spin.add(model); o.fixed=false; o.lift=.34;
+    model.traverse(m=>{ if(m.isMesh){ m.userData.si=i; pickables.push(m);} });
+    o.home.set(mini[0],mini[1]+.26,mini[2]);
+    if(s.model && THREE.GLTFLoader){ new THREE.GLTFLoader().load(s.model,gl=>{
       const m=gl.scene, box=new THREE.Box3().setFromObject(m), size=box.getSize(new THREE.Vector3());
       m.scale.setScalar(1.15/Math.max(size.x,size.y,size.z)); box.setFromObject(m); m.position.sub(box.getCenter(new THREE.Vector3()));
       spin.remove(model); spin.add(m);
       for(let k=pickables.length-1;k>=0;k--) if(pickables[k].userData.si===i) pickables.splice(k,1);
-      m.traverse(x=>{ if(x.isMesh){ x.userData.si=i; pickables.push(x);} });
-    },undefined,()=>{}); }
-  root.position.copy(home);
+      m.traverse(x=>{ if(x.isMesh){ x.userData.si=i; pickables.push(x);} }); },undefined,()=>{}); }
+  } else if(sk>=0){ o.spot=sk; o.home.set(...SPOTS[sk].p); }
+  else { o.home.set(TV_POS[0],1.2,TV_POS[2]); o.lift=.42; }      /* foto & video lives on the TV */
+  root.position.copy(o.home); root.scale.setScalar(MS);
   return o;
 });
+/* a label for the speaker, which is not a portfolio section */
+const boseK=SPOTS.findIndex(s=>s.id==="bose"), boseTag=document.createElement("button");
+boseTag.className="tag"; labelBox.appendChild(boseTag);
+boseTag.addEventListener("click",e=>showSpotActs(boseK,e.clientX,e.clientY));
 
-/* ---------- pointer: tap spots/objects, drag objects to throw ---------- */
+/* ---------- pointer ---------- */
 const ray=new THREE.Raycaster(), ndc=new THREE.Vector2(), dragPlane=new THREE.Plane(), hitP=new THREE.Vector3(), camDir=new THREE.Vector3(), tmp=new THREE.Vector3();
 let drag=null, downPt=null, downData=null, entered=false;
 function setRay(e){ const r=canvasEl.getBoundingClientRect(); ndc.set((e.clientX-r.left)/r.width*2-1,-((e.clientY-r.top)/r.height)*2+1); ray.setFromCamera(ndc,camera); }
 function pick(e){ setRay(e); const h=ray.intersectObjects(pickables,false)[0]; downData=h?h.object.userData:null;
   if(!h) return -1; const u=h.object.userData;
-  if(u.spot!==undefined) return -4; if(u.tv) return -2; if(u.frame!==undefined) return -3; return u.si; }
+  if(u.si!==undefined) return u.si; if(u.spot!==undefined) return -4; if(u.tv) return -2; if(u.frame!==undefined) return -3; return -1; }
 function keepInside(p,r){ p.x=Math.min(B.xmax-r,Math.max(B.xmin+r,p.x)); p.z=Math.min(B.zmax-r,Math.max(B.zmin+r,p.z)); }
 canvasEl.addEventListener("pointerdown",e=>{
   if(!entered) return;
@@ -1189,46 +1229,49 @@ canvasEl.addEventListener("pointermove",e=>{
     if(!drag.moved && Math.hypot(e.clientX-downPt.x,e.clientY-downPt.y)>6){ drag.moved=true; o.state="held"; o.rest=0; closeActs(); }
     if(drag.moved){ setRay(e); if(ray.ray.intersectPlane(dragPlane,hitP)){
       const now=performance.now(), dts=Math.max(8,now-drag.lt)/1000; drag.lt=now;
-      tmp.copy(hitP).add(drag.off); keepInside(tmp,o.r); tmp.y=Math.min(7.5,Math.max(tmp.y,o.r+.05));
+      tmp.copy(hitP).add(drag.off); keepInside(tmp,o.r); tmp.y=Math.min(1.9,Math.max(tmp.y,o.r+.03));
       const v=tmp.clone().sub(o.root.position).divideScalar(dts); o.vel.lerp(v,.55); o.root.position.copy(tmp); } }
     return; }
   if(e.pointerType==="mouse" && entered && !e.buttons){ const h=pick(e); hover=h>=0?h:-1;
-    canvasEl.style.cursor=h!==-1?"pointer":"default";
+    canvasEl.style.cursor=h!==-1?"pointer":"grab";
     SPOTS.forEach((s,k)=>{ s.hot=(h===-4&&downData&&downData.spot===k); }); }
 });
+/* tap the floor or a piece of furniture to bring the camera there */
+function goTo(p){ const off=tmp.copy(camera.position).sub(controls.target); const L=off.length(), want=Math.min(L,Math.max(3.2,L*.72));
+  off.setLength(want); const t=new THREE.Vector3(p.x,Math.min(1.2,Math.max(.25,p.y)),p.z); flyTo(t.clone().add(off),t,.9); }
 function endPointer(e){
   if(drag && e.pointerId===drag.id){ const o=objs[drag.i];
     if(!drag.moved && e.type==="pointerup") showObjActs(drag.i,e.clientX,e.clientY);
-    else if(drag.moved){ o.state="free"; o.rest=0; if(o.vel.length()>16) o.vel.setLength(16);
-      o.av.set(o.vel.z*1.3,(Math.random()-.5)*5,-o.vel.x*1.3); }
-    drag=null; controls.enabled=true; canvasEl.style.cursor="default"; downPt=null; return; }
+    else if(drag.moved){ o.state="free"; o.rest=0; if(o.vel.length()>9) o.vel.setLength(9);
+      o.av.set(o.vel.z*2,(Math.random()-.5)*5,-o.vel.x*2); }
+    drag=null; controls.enabled=true; canvasEl.style.cursor="grab"; downPt=null; return; }
   if(downPt && e.type==="pointerup" && Math.hypot(e.clientX-downPt.x,e.clientY-downPt.y)<6){
     const h=downPt.hit, d=downPt.data;
     if(h===-4 && d) showSpotActs(d.spot,e.clientX,e.clientY);
     else if(h===-2) showTvActs(e.clientX,e.clientY);
     else if(h===-3 && d) showFrame(d.frame);
-    else { if(DEBUG && scanMesh){ setRay(e); const hs=ray.intersectObject(scanMesh,false)[0];
-        if(hs){ const p=hs.point; const txt=`[${p.x.toFixed(2)}, ${p.y.toFixed(2)}, ${p.z.toFixed(2)}]`; console.log("DEBUG spot:",txt); toast("📍 "+txt); } }
-      closeActs(); if(current>=0) closePanel(); } }
+    else if(!$("#acts").hidden) closeActs();
+    else if(current>=0) closePanel();
+    else { setRay(e); const hs=scanMesh?ray.intersectObject(scanMesh,false).find(x=>upper||x.point.y<=CUT):null;
+      if(hs){ if(DEBUG){ const p=hs.point, txt=`[${p.x.toFixed(2)}, ${p.y.toFixed(2)}, ${p.z.toFixed(2)}]`; console.log("DEBUG spot:",txt); toast("📍 "+txt); } goTo(hs.point); }
+      else flyTo(view.pos,view.target,1); } }
   downPt=null;
 }
 canvasEl.addEventListener("pointerup",endPointer); canvasEl.addEventListener("pointercancel",endPointer);
 canvasEl.addEventListener("pointerleave",()=>{ if(!drag) hover=-1; });
 
-/* ---------- orbit camera ---------- */
+/* ---------- orbit camera: free 360° turn, wheel / pinch to zoom ---------- */
 const controls=new THREE.OrbitControls(camera,canvasEl);
-Object.assign(controls,{enableDamping:true,dampingFactor:.07,enablePan:false,rotateSpeed:.55,zoomSpeed:.8,minDistance:4.5,maxDistance:34,
-  minPolarAngle:.5,maxPolarAngle:1.38,minAzimuthAngle:-1.5,maxAzimuthAngle:1.5});
-controls.enabled=false;
+Object.assign(controls,{enableDamping:true,dampingFactor:.08,enablePan:false,rotateSpeed:.7,zoomSpeed:.9,minDistance:2,maxDistance:30,minPolarAngle:.15,maxPolarAngle:1.5});
+controls.enabled=false; canvasEl.style.cursor="grab";
 
 /* ---------- framing ---------- */
-let portrait=null; const view={pos:new THREE.Vector3(),target:new THREE.Vector3(-1.4,.9,-.8),fov:38};
+let portrait=null; const view={pos:new THREE.Vector3(),target:new THREE.Vector3(CX,.5,CZ),fov:38};
 function layout(){
   const w=innerWidth,h=innerHeight,asp=w/h, was=portrait; portrait=asp<.9;
   renderer.setSize(w,h,false); camera.aspect=asp;
-  const dist=portrait?19:13.5*Math.max(1,1.45/asp); view.fov=portrait?(asp<.6?54:48):38;
-  view.pos.setFromSphericalCoords(dist,.98,.52).add(view.target);
-  const s=portrait?.85:1; objs.forEach(o=>{o.scale=s; o.r=.62*s;});
+  const dist=portrait?15.5:11*Math.max(1,1.45/asp); view.fov=portrait?(asp<.6?52:46):38;
+  view.pos.setFromSphericalCoords(dist,.8,.62).add(view.target);
   camera.fov=view.fov; camera.updateProjectionMatrix();
   if(was!==null && was!==portrait && entered && current<0) flyTo(view.pos,view.target,.8);
 }
@@ -1240,16 +1283,20 @@ function flyTo(p,t,dur=1.1){
   fly={p0:camera.position.clone(),t0:controls.target.clone(),p1:p.clone(),t1:t.clone(),k:0,dur};
 }
 addEventListener("resize",layout); layout();
-camera.position.copy(view.pos).add(new THREE.Vector3(10,16,14)); controls.target.copy(view.target); controls.update();
+camera.position.copy(view.pos).add(new THREE.Vector3(8,14,12)); controls.target.copy(view.target); controls.update();
 onEnter=()=>{ if(entered) return; entered=true; controls.enabled=true; flyTo(view.pos,view.target,2.8); };
 
 /* ---------- loop ---------- */
-const clock=new THREE.Clock(), v=new THREE.Vector3(), dv=new THREE.Vector3(), sph=new THREE.Spherical(), G=-14;
+const clock=new THREE.Clock(), v=new THREE.Vector3(), dv=new THREE.Vector3(), sph=new THREE.Spherical(), G=-9;
 let lastCur=-2, offX=0, offY=0;
 const wrapA=a=>Math.atan2(Math.sin(a),Math.cos(a));
 const active=s=>s==="free"||s==="held";
 const cDay=new THREE.Color(), cNight=new THREE.Color();
 function lerpCol(target,a,b,m){ cDay.set(a); cNight.set(b); target.copy(cDay).lerp(cNight,m); }
+function placeTag(el,p,lift,show,hot){ v.copy(p); v.y+=lift; v.project(camera); const ok=show&&entered&&v.z<1;
+  el.style.visibility=ok?"visible":"hidden";
+  if(ok) el.style.transform=`translate(${(v.x*.5+.5)*innerWidth}px,${(-v.y*.5+.5)*innerHeight}px) translate(-50%,-100%)`;
+  el.classList.toggle("hot",!!hot); }
 function frame(){
   const dt=Math.min(clock.getDelta(),.05), t=clock.elapsedTime;
 
@@ -1264,72 +1311,69 @@ function frame(){
   clouds.mat.opacity=D.clouds+(N.clouds-D.clouds)*m;
   sun.intensity=D.sun+(N.sun-D.sun)*m; lerpCol(sun.color,D.sunCol,N.sunCol,m);
   hemi.intensity=D.hemi+(N.hemi-D.hemi)*m;
-  lerpCol(scanTint,D.tint,N.tint,m);
+  lerpCol(scanTint,D.tint,N.tint,m); lerpCol(shellTint,"#f3ece0","#857fb0",m); lerpCol(paneCol,"#bfe6ff","#2a1f5c",m);
+  if(paneStars) paneStars.opacity=m*(.85+.15*Math.sin(t*1.6));
 
-  /* focus the camera on the open section's object */
+  /* fly to the place where the open section lives */
   if(entered && current!==lastCur){ lastCur=current;
-    if(current>=0){ const o=objs[current], h=o.home; if(o.state!=="home") o.state="return";
+    if(current>=0){ const o=objs[current], h=o.home; if(o.state!=="home"&&!o.fixed) o.state="return";
       sph.setFromVector3(tmp.copy(camera.position).sub(controls.target));
-      const p=new THREE.Vector3().setFromSphericalCoords(portrait?8.5:7,Math.min(1.15,Math.max(.7,sph.phi)),Math.atan2(h.x,h.z)*.35+sph.theta*.65).add(h);
-      flyTo(p,new THREE.Vector3(h.x,h.y-.1,h.z),1.1);
+      const p=new THREE.Vector3().setFromSphericalCoords(portrait?5:3.8,Math.min(1.0,Math.max(.65,sph.phi)),sph.theta).add(h);
+      flyTo(p,h.clone(),1.1);
     } else flyTo(view.pos,view.target,1.1); }
   if(fly){ fly.k+=dt/fly.dur; const e=ease(Math.min(1,fly.k)); camera.position.lerpVectors(fly.p0,fly.p1,e); controls.target.lerpVectors(fly.t0,fly.t1,e); if(fly.k>=1) fly=null; }
   controls.update();
 
-  /* keep the open object clear of the window */
+  /* keep the open spot clear of the window */
   const open=current>=0, wide=innerWidth>700;
   const wantX=open&&wide?Math.min(470,innerWidth-32)/2:0, wantY=open&&!wide?innerHeight*.33:0, kk=reduce?1:Math.min(1,dt*4);
   offX+=(wantX-offX)*kk; offY+=(wantY-offY)*kk;
   if(Math.abs(offX)>.5||Math.abs(offY)>.5) camera.setViewOffset(innerWidth,innerHeight,offX,offY,innerWidth,innerHeight);
   else if(camera.view&&camera.view.enabled) camera.clearViewOffset();
 
-  /* floating objects */
-  objs.forEach((o,i)=>{
+  /* the small objects: hover over their furniture, follow the hand, fall, come back */
+  objs.forEach((o,i)=>{ if(o.fixed) return;
     const P=o.root.position, S=o.spin.rotation;
     if(o.state==="home"){
-      const bob=reduce?0:Math.sin(t*1.3+o.phase)*.14, k=Math.min(1,dt*3);
+      const bob=reduce?0:Math.sin(t*1.5+o.phase)*.035, k=Math.min(1,dt*3);
       P.x+=(o.home.x-P.x)*k; P.z+=(o.home.z-P.z)*k; P.y+=(o.home.y+bob-P.y)*Math.min(1,dt*5);
-      if(!reduce) S.y+=dt*(current===i?.25:(hover===i?1.4:.45));
-      S.x+=(0-S.x)*k; S.z=reduce?0:S.z+((Math.sin(t*.9+o.phase)*.06)-S.z)*k;
+      if(!reduce) S.y+=dt*(current===i?.3:(hover===i?1.6:.5));
+      S.x+=(0-S.x)*k; S.z+=(0-S.z)*k;
     } else if(o.state==="held"){
       o.vel.multiplyScalar(Math.pow(.02,dt)); S.y+=dt*2;
     } else if(o.state==="free"){
       o.vel.y+=G*dt; P.addScaledVector(o.vel,dt);
-      if(P.y<o.r){ P.y=o.r; if(o.vel.y<0) o.vel.y=-o.vel.y*.5; if(o.vel.y<.7) o.vel.y=0;
-        const f=Math.pow(.25,dt); o.vel.x*=f; o.vel.z*=f; o.av.multiplyScalar(Math.pow(.2,dt)); }
-      if(P.y>7.5){ P.y=7.5; o.vel.y=-Math.abs(o.vel.y)*.5; }
+      if(P.y<o.r){ P.y=o.r; if(o.vel.y<0) o.vel.y=-o.vel.y*.45; if(o.vel.y<.5) o.vel.y=0;
+        const f=Math.pow(.2,dt); o.vel.x*=f; o.vel.z*=f; o.av.multiplyScalar(Math.pow(.15,dt)); }
+      if(P.y>1.95){ P.y=1.95; o.vel.y=-Math.abs(o.vel.y)*.5; }
       [["x",B.xmin,B.xmax],["z",B.zmin,B.zmax]].forEach(([ax,lo,hi])=>{ if(P[ax]<lo+o.r){ P[ax]=lo+o.r; if(o.vel[ax]<0) o.vel[ax]*=-.6; } if(P[ax]>hi-o.r){ P[ax]=hi-o.r; if(o.vel[ax]>0) o.vel[ax]*=-.6; } });
       S.x+=o.av.x*dt; S.y+=o.av.y*dt; S.z+=o.av.z*dt;
-      const still=P.y<=o.r+.01 && o.vel.lengthSq()<.05; o.rest=still?o.rest+dt:0;
-      if(o.rest>2.2){ o.state="return"; S.x=wrapA(S.x); S.z=wrapA(S.z); }
+      const still=P.y<=o.r+.01 && o.vel.lengthSq()<.03; o.rest=still?o.rest+dt:0;
+      if(o.rest>2){ o.state="return"; S.x=wrapA(S.x); S.z=wrapA(S.z); }
     } else if(o.state==="return"){
-      const k=Math.min(1,dt*1.8); P.lerp(o.home,k); S.x+=(0-S.x)*k; S.z+=(0-S.z)*k; S.y+=dt*.45;
-      if(P.distanceTo(o.home)<.05) o.state="home";
+      const k=Math.min(1,dt*2); P.lerp(o.home,k); S.x+=(0-S.x)*k; S.z+=(0-S.z)*k; S.y+=dt*.5;
+      if(P.distanceTo(o.home)<.03) o.state="home";
     }
+    const want=MS*((hover===i||current===i)&&o.state==="home"?1.25:1); o.hs+=(want-o.hs)*Math.min(1,dt*8); o.root.scale.setScalar(o.hs);
   });
-  /* bumps between objects */
   for(let a=0;a<objs.length;a++) for(let b=a+1;b<objs.length;b++){
-    const A=objs[a],Bo=objs[b]; if(!active(A.state)&&!active(Bo.state)) continue;
+    const A=objs[a],Bo=objs[b]; if(A.fixed||Bo.fixed||(!active(A.state)&&!active(Bo.state))) continue;
     dv.subVectors(Bo.root.position,A.root.position); const d=dv.length(), mm=A.r+Bo.r; if(d>=mm||d<1e-4) continue;
     dv.divideScalar(d); const ov=mm-d, wa=A.state==="held"?0:(Bo.state==="held"?1:.5);
     A.root.position.addScaledVector(dv,-ov*wa); Bo.root.position.addScaledVector(dv,ov*(1-wa));
-    [A,Bo].forEach(X=>{ if(X.state==="home"||X.state==="return"){ X.state="free"; X.rest=0; X.spin.rotation.x=wrapA(X.spin.rotation.x); } });
+    [A,Bo].forEach(X=>{ if(X.state==="home"||X.state==="return"){ X.state="free"; X.rest=0; } });
     const rv=(Bo.vel.x-A.vel.x)*dv.x+(Bo.vel.y-A.vel.y)*dv.y+(Bo.vel.z-A.vel.z)*dv.z;
     if(rv<0){ const j=-1.7*rv; if(A.state!=="held") A.vel.addScaledVector(dv,-j*(Bo.state==="held"?1:.5)); if(Bo.state!=="held") Bo.vel.addScaledVector(dv,j*(A.state==="held"?1:.5)); }
   }
-  objs.forEach((o,i)=>{
-    const P=o.root.position;
-    const want=o.scale*((hover===i||current===i)&&o.state==="home"?1.14:1); o.hs+=(want-o.hs)*Math.min(1,dt*8); o.root.scale.setScalar(o.hs);
-    v.copy(P); v.y+=.95*o.hs; v.project(camera);
-    const el=labels[i], show=entered&&v.z<1&&o.state==="home";
-    el.style.visibility=show?"visible":"hidden";
-    if(show) el.style.transform=`translate(${(v.x*.5+.5)*innerWidth}px,${(-v.y*.5+.5)*innerHeight}px) translate(-50%,-100%)`;
-    el.classList.toggle("hot",hover===i||current===i);
-  });
 
-  /* spot markers pulse */
-  SPOTS.forEach((s,k)=>{ const sc=.42*(1+(reduce?0:.14*Math.sin(t*2.6+k*1.7)))*(s.hot?1.45:1); s.marker.scale.set(sc,sc,1);
-    s.marker.material.opacity=.75+.25*Math.sin(t*3+k); });
+  /* labels: one per section, placed where it lives, plus the speaker */
+  objs.forEach((o,i)=>{ const spotHot=o.spot>=0&&SPOTS[o.spot].hot;
+    placeTag(labels[i],o.fixed?o.home:o.root.position,o.lift,o.fixed||o.state==="home",hover===i||current===i||spotHot); });
+  placeTag(boseTag,v.set(...SPOTS[boseK].p).clone(),.45,true,SPOTS[boseK].hot);
+
+  /* spot sparkles */
+  SPOTS.forEach((s,k)=>{ const sc=.3*(1+(reduce?0:.16*Math.sin(t*2.6+k*1.7)))*(s.hot?1.5:1); s.marker.scale.set(sc,sc,1);
+    s.marker.material.rotation=reduce?0:t*.6+k; });
 
   if(!tv.video && (Math.floor(t*12)!==tv.f)){ tv.f=Math.floor(t*12); drawNoise(); }
   if(!reduce){ clouds.forEach(c=>{ c.userData.a+=c.userData.sp*dt; c.position.x=Math.cos(c.userData.a)*c.userData.r; c.position.z=Math.sin(c.userData.a)*c.userData.r; });
@@ -1338,19 +1382,19 @@ function frame(){
   requestAnimationFrame(frame);
 }
 
-/* ---------- action bubbles for the depa ---------- */
-showObjActs=(i,x,y)=>{ const s=SECTIONS[i], u=UI[lang], c=C[lang][s.id], acts=[];
+/* ---------- action bubbles ---------- */
+const secIdx=id=>SECTIONS.findIndex(s=>s.id===id), go=id=>()=>openSection(secIdx(id));
+showObjActs=(i,x,y)=>{ const s=SECTIONS[i], u=UI[lang], c=C[lang][s.id], acts=[[ACT_ICON[s.id]||"👀",u.actOpen+" "+c.t,()=>openSection(i)]];
   if(s.shape==="pencil") acts.push(["✏️",u.actDraw,()=>openPaint()]);
   if(s.id==="apps") acts.push(["🎮",u.actSnake,()=>{ openSection(i); setTimeout(()=>{ const el=document.querySelector(".console"); if(el) el.scrollIntoView({block:"center",behavior:"smooth"}); },650); }]);
-  if(s.id==="foto") acts.push(["📺",u.actTv,()=>openTv()]);
-  acts.unshift([ACT_ICON[s.id]||"👀",u.actOpen+" "+c.t,()=>openSection(i)]);
   showActs(x,y,c.t,acts); };
-showTvActs=(x,y)=>{ const u=UI[lang]; showActs(x,y,u.tvName,[["📼",u.actTv,()=>openTv()],["🎬",u.actOpen+" "+C[lang].foto.t,()=>openSection(SECTIONS.findIndex(s=>s.id==="foto"))]]); };
-showSpotActs=(k,x,y)=>{ const u=UI[lang], id=SPOTS[k].id, go=sid=>()=>openSection(SECTIONS.findIndex(s=>s.id===sid));
-  if(id==="tote") showActs(x,y,u.spotTote,[["🎪",u.actTote,go("eventos")],["📸","FBAL ↗","https://www.instagram.com/festivalbiarritzamlat/"]]);
+showTvActs=(x,y)=>{ const u=UI[lang]; showActs(x,y,u.tvName,[["🎬",u.actOpen+" "+C[lang].foto.t,go("foto")],["📼",u.actTv,()=>openTv()]]); };
+showSpotActs=(k,x,y)=>{ const u=UI[lang], id=SPOTS[k].id;
+  if(id==="tote") showActs(x,y,u.spotTote,[["🎪",u.actTote,go("eventos")]]);
   else if(id==="kitchen") showActs(x,y,u.spotKitchen,[["💀",u.actAteliers,go("mediacion")],["🌮",u.actComida,"https://www.instagram.com/comidariquita/"]]);
   else if(id==="kindle") showActs(x,y,u.spotKindle,[["📖",u.actResearch,go("investigacion")],["📚",u.actBooks,()=>openRecs("books")]]);
   else if(id==="bose") showActs(x,y,u.spotBose,[["🎧",u.actPlaylist,"https://open.spotify.com/playlist/5mnycnBH6tDYbcElYltTU2"],["🎵",u.actSongs,()=>openRecs("songs")]]); };
+window.__boseLabel=()=>{ boseTag.textContent="🎧 "+UI[lang].boseTag; };
 renderUI(); frame();
 if(loaderDone){ onEnter(); fromHash(); }
 }
